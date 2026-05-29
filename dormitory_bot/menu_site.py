@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import json
 import html
-from datetime import datetime
+import re
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -39,6 +40,39 @@ def _escape(text: str) -> str:
 
 def _json_script_data(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False).replace("</", "<\\/")
+
+
+def _menu_pdf_links(menu_dir: Path) -> list[Path]:
+    return sorted(path for path in menu_dir.glob("*.pdf") if path.is_file())
+
+
+def _pdf_link_label(pdf: Path) -> str:
+    match = re.fullmatch(r"menu-(\d{4})-(\d{2})-(\d{2})-(\d{2})", pdf.stem)
+    if match:
+        _, month, start_day, end_day = match.groups()
+        return f"{int(month)}/{int(start_day)}〜{int(month)}/{int(end_day)} PDF版"
+    match = re.fullmatch(r"menu(\d{2})(\d{2})", pdf.stem)
+    if match:
+        start_month, start_day = (int(part) for part in match.groups())
+        start_date = date(2026, start_month, start_day)
+        end_date = start_date + timedelta(days=6)
+        return f"{start_date.month}/{start_date.day}〜{end_date.month}/{end_date.day} PDF版"
+    return f"PDF版: {pdf.stem}"
+
+
+def _render_pdf_links(pdf_files: list[Path]) -> str:
+    if not pdf_files:
+        return ""
+
+    links = "".join(
+        f'<a href="./{_escape(pdf.name)}" download>{_escape(_pdf_link_label(pdf))}</a>'
+        for pdf in pdf_files
+    )
+    return f"""
+      <div class="hero-links hero-links--pdf">
+        {links}
+      </div>
+    """
 
 
 def _render_menu_card(entry: dict[str, Any]) -> str:
@@ -110,7 +144,7 @@ def _day_detail_html(day_entries: list[dict[str, Any]]) -> str:
     """
 
 
-def _build_menu_page(entries: list[dict[str, Any]]) -> str:
+def _build_menu_page(entries: list[dict[str, Any]], pdf_files: list[Path] | None = None) -> str:
     if not entries:
         body = """
         <section class="empty-state">
@@ -309,6 +343,7 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
         <a href="./">メニュー一覧</a>
         <a href="../calendar.html">カレンダーで見る</a>
       </div>
+      {_render_pdf_links(pdf_files or [])}
       <div class="meta">最終生成: {_escape(now_label)} JST</div>
     </section>
     {body}
@@ -888,7 +923,9 @@ def write_menu_site(store_path: Path = DEFAULT_STORE_PATH, website_dir: Path = D
     menu_dir.mkdir(parents=True, exist_ok=True)
     website_dir.mkdir(parents=True, exist_ok=True)
 
-    menu_html = _build_menu_page(future_only_entries)
+    pdf_files = _menu_pdf_links(menu_dir)
+
+    menu_html = _build_menu_page(future_only_entries, pdf_files)
     (menu_dir / "index.html").write_text(menu_html, encoding="utf-8")
     (website_dir / "calendar.html").write_text(_build_calendar_page(entries), encoding="utf-8")
     (website_dir / "index.html").write_text(_build_root_page(), encoding="utf-8")
