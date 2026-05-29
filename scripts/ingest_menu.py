@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import argparse
@@ -6,8 +7,8 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from .config import DEFAULT_STORE_PATH, JST
-from .store import MenuEntry, parse_menu_from_text, summarize_menu, upsert_entry
+from dormitory_bot.config import DEFAULT_STORE_PATH, JST
+from dormitory_bot.store import MenuEntry, parse_menu_from_text, summarize_menu, upsert_entry
 
 
 def parse_args() -> argparse.Namespace:
@@ -23,7 +24,7 @@ def parse_args() -> argparse.Namespace:
         "--menu-json",
         help="Optional structured JSON menu. When omitted, --text is parsed into structured fields.",
     )
-    parser.add_argument("--image-path", help="Optional original image path for reference.")
+    parser.add_argument("--image-path", help="Optional original image or PDF path for reference.")
     parser.add_argument("--store", default=str(DEFAULT_STORE_PATH), help="Path to the JSON store.")
     return parser.parse_args()
 
@@ -35,7 +36,6 @@ def main() -> int:
     target_date = args.date or today
 
     text = args.text.strip()
-
     if not text:
         raise SystemExit("No menu text was provided.")
 

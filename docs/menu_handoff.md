@@ -56,16 +56,16 @@ Each entry has:
 
 ### Manual add
 
-Use `ingest.py` when adding or correcting a menu:
+Use `scripts/ingest_menu.py` when adding or correcting a menu:
 
 ```bash
-python3 -m dormitory_bot.ingest --meal lunch --text "ごはん\n味噌汁\n唐揚げ"
+python3 scripts/ingest_menu.py --meal lunch --text "ごはん\n味噌汁\n唐揚げ"
 ```
 
 If you already have structured data, pass JSON directly:
 
 ```bash
-python3 -m dormitory_bot.ingest --meal dinner --menu-json '{"kind":"dinner","a":"ハンバーグ","b":"魚","common":["ご飯","汁物"]}' --text "Aセット: ハンバーグ\nBセット: 魚\n共通: ご飯 / 汁物"
+python3 scripts/ingest_menu.py --meal dinner --menu-json '{"kind":"dinner","a":"ハンバーグ","b":"魚","common":["ご飯","汁物"]}' --text "Aセット: ハンバーグ\nBセット: 魚\n共通: ご飯 / 汁物"
 ```
 
 The `--text` argument is still accepted as input, but the stored form is structured `menu`.

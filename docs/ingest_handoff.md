@@ -24,7 +24,7 @@ When a chat includes a menu image or PDF and asks to "add it", the expected beha
 Recommended command:
 
 ```bash
-python3 -m dormitory_bot.ingest --meal lunch --date 2026-05-29 --text "..." --image-path /path/to/source.pdf
+python3 scripts/ingest_menu.py --meal lunch --date 2026-05-29 --text "..." --image-path /path/to/source.pdf
 ```
 
 If structured data is already known, prefer `--menu-json`.
@@ -54,4 +54,3 @@ If the user is only for test sends, add `--test-user`.
 - User registry: `data/user_data.json`
 
 Raw attachments are only supporting material. The structured JSON stores are the canonical data used by the site and notification code.
-

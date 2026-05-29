@@ -13,7 +13,7 @@
 
 ## よく使うもの
 
-- メニュー追加: `python3 -m dormitory_bot.ingest`
+- メニュー追加: `python3 scripts/ingest_menu.py`
 - メニュー通知: `python3 -m dormitory_bot.menu_notify`
 - 掃除通知: `python3 -m dormitory_bot.cleaning_notify`
 - 公開用のメニュー一覧: `menu/index.html`
