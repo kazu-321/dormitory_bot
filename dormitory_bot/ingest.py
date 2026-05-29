@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import json
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from .config import DEFAULT_STORE_PATH, JST
-from .store import MenuEntry, summarize_menu_text, upsert_entry
+from .store import MenuEntry, parse_menu_from_text, summarize_menu, upsert_entry
 
 
 def parse_args() -> argparse.Namespace:
@@ -17,6 +18,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--menu-summary",
         help="Optional short summary to store in menu.json. Defaults to an auto-generated summary.",
+    )
+    parser.add_argument(
+        "--menu-json",
+        help="Optional structured JSON menu. When omitted, --text is parsed into structured fields.",
     )
     parser.add_argument("--image-path", help="Optional original image path for reference.")
     parser.add_argument("--store", default=str(DEFAULT_STORE_PATH), help="Path to the JSON store.")
@@ -30,20 +35,25 @@ def main() -> int:
     target_date = args.date or today
 
     text = args.text.strip()
-    source = "manual"
 
     if not text:
         raise SystemExit("No menu text was provided.")
 
-    menu_summary = args.menu_summary.strip() if args.menu_summary else summarize_menu_text(args.meal, text)
+    if args.menu_json:
+        menu = json.loads(args.menu_json)
+        if not isinstance(menu, dict):
+            raise SystemExit("--menu-json must decode to an object.")
+    else:
+        menu = parse_menu_from_text(args.meal, text)
+
+    menu_summary = args.menu_summary.strip() if args.menu_summary else summarize_menu(args.meal, menu)
 
     entry = MenuEntry(
         date=target_date,
         meal=args.meal,
-        text=text,
+        menu=menu,
         menu_summary=menu_summary or None,
         image_path=str(Path(args.image_path).resolve()) if args.image_path else None,
-        source=source,
         extracted_at=datetime.now(tz).isoformat(),
     )
     upsert_entry(entry, Path(args.store))

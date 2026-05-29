@@ -5,26 +5,25 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
-from .config import DEFAULT_STORE_PATH
+from .config import DEFAULT_STORE_PATH, JST
 
 
 @dataclass
 class MenuEntry:
     date: str
     meal: str
-    text: str
+    menu: dict[str, Any]
     menu_summary: str | None = None
     image_path: str | None = None
-    source: str = "manual"
     extracted_at: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         data: dict[str, Any] = {
             "date": self.date,
             "meal": self.meal,
-            "text": self.text,
-            "source": self.source,
+            "menu": self.menu,
         }
         if self.menu_summary is not None:
             data["menu_summary"] = self.menu_summary
@@ -38,17 +37,21 @@ class MenuEntry:
 def ensure_store(path: Path = DEFAULT_STORE_PATH) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
-        path.write_text(json.dumps({"version": 1, "entries": []}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        path.write_text(json.dumps({"version": 2, "entries": []}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return path
 
 
 def load_store(path: Path = DEFAULT_STORE_PATH) -> dict[str, Any]:
     path = ensure_store(path)
-    return json.loads(path.read_text(encoding="utf-8"))
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("version") != 2 or any("menu" not in entry for entry in data.get("entries", []) if isinstance(entry, dict)):
+        return migrate_store_data(data)
+    return data
 
 
 def save_store(data: dict[str, Any], path: Path = DEFAULT_STORE_PATH) -> None:
     ensure_store(path)
+    data = migrate_store_data(data)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -64,6 +67,8 @@ def upsert_entry(entry: MenuEntry, path: Path = DEFAULT_STORE_PATH) -> dict[str,
     if not updated:
         entries.append(entry.to_dict())
     entries.sort(key=lambda item: (item.get("date", ""), item.get("meal", "")))
+    today = _today_iso()
+    entries = [item for item in entries if str(item.get("date", "")) >= today]
     data["entries"] = entries
     save_store(data, path)
     return data
@@ -85,16 +90,60 @@ def latest_entry_for_meal(meal: str, path: Path = DEFAULT_STORE_PATH) -> dict[st
     return sorted(matches, key=lambda item: item.get("date", ""))[-1]
 
 
-def _strip_prefixes(text: str) -> str:
-    value = text.strip()
-    for prefix in ("Aセット:", "Aセット：", "Bセット:", "Bセット："):
-        if value.startswith(prefix):
-            return value.split(":", 1)[1].strip()
-    return value
+def _today_iso() -> str:
+    return datetime.now(ZoneInfo(JST)).date().isoformat()
+
+
+def _clean_piece(value: str) -> str:
+    return value.strip().replace("\u3000", " ")
+
+
+def _split_common_items(text: str) -> list[str]:
+    items: list[str] = []
+    for part in text.replace("／", "/").split("/"):
+        cleaned = _clean_piece(part)
+        if cleaned:
+            items.append(cleaned)
+    return items
+
+
+def parse_menu_from_text(meal: str, text: str) -> dict[str, Any]:
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if meal == "dinner":
+        a_main = ""
+        b_main = ""
+        common: list[str] = []
+        for line in lines:
+            if line.startswith("Aセット:") or line.startswith("Aセット："):
+                a_main = _clean_piece(line.split(":", 1)[1])
+            elif line.startswith("Bセット:") or line.startswith("Bセット："):
+                b_main = _clean_piece(line.split(":", 1)[1])
+            elif line.startswith("A/B共通メニュー:") or line.startswith("共通:"):
+                common.extend(_split_common_items(line.split(":", 1)[1]))
+            else:
+                common.extend(_split_common_items(line))
+        return {
+            "kind": "dinner",
+            "a": a_main,
+            "b": b_main,
+            "common": common,
+        }
+
+    return {
+        "kind": "list",
+        "items": lines,
+    }
+
+
+def _get_menu_value(menu: dict[str, Any] | None, key: str) -> str:
+    if not menu:
+        return ""
+    value = menu.get(key, "")
+    return _clean_piece(str(value)) if value is not None else ""
 
 
 def summarize_menu_name(text: str) -> str:
-    value = _strip_prefixes(text)
+    value = _clean_piece(text)
     if not value:
         return value
 
@@ -153,24 +202,79 @@ def summarize_menu_name(text: str) -> str:
     return candidate or value
 
 
-def summarize_menu_text(meal: str, text: str) -> str:
-    lines = [line.strip() for line in text.splitlines() if line.strip()]
-    if not lines:
-        return ""
-
+def summarize_menu(meal: str, menu: dict[str, Any]) -> str:
     if meal == "dinner":
-        a_main = ""
-        b_main = ""
-        for line in lines:
-            if line.startswith("Aセット:") or line.startswith("Aセット："):
-                a_main = summarize_menu_name(line.split(":", 1)[1].strip())
-            elif line.startswith("Bセット:") or line.startswith("Bセット："):
-                b_main = summarize_menu_name(line.split(":", 1)[1].strip())
-        if a_main or b_main:
-            parts = [part for part in (a_main, b_main) if part]
+        parts = []
+        a_main = summarize_menu_name(_get_menu_value(menu, "a"))
+        b_main = summarize_menu_name(_get_menu_value(menu, "b"))
+        if a_main:
+            parts.append(a_main)
+        if b_main:
+            parts.append(b_main)
+        if parts:
             return " / ".join(parts)
+        return summarize_menu_name(_get_menu_value(menu, "common"))
 
-    return summarize_menu_name(lines[0])
+    items = menu.get("items", []) if isinstance(menu, dict) else []
+    if isinstance(items, list) and items:
+        return summarize_menu_name(str(items[0]))
+    return ""
+
+
+def menu_to_lines(meal: str, menu: dict[str, Any]) -> list[str]:
+    if meal == "dinner":
+        lines: list[str] = []
+        a_main = _get_menu_value(menu, "a")
+        b_main = _get_menu_value(menu, "b")
+        if a_main:
+            lines.append(f"(A) {a_main}")
+        if b_main:
+            lines.append(f"(B) {b_main}")
+        common = menu.get("common", [])
+        if isinstance(common, list):
+            for item in common:
+                cleaned = _clean_piece(str(item))
+                if cleaned:
+                    lines.append(cleaned)
+        return lines
+
+    items = menu.get("items", [])
+    if isinstance(items, list):
+        return [_clean_piece(str(item)) for item in items if _clean_piece(str(item))]
+    return []
+
+
+def normalize_entry(entry: dict[str, Any]) -> dict[str, Any]:
+    meal = str(entry.get("meal", "")).strip()
+    menu = entry.get("menu")
+    if not isinstance(menu, dict):
+        text = str(entry.get("text", ""))
+        menu = parse_menu_from_text(meal, text)
+    normalized: dict[str, Any] = {
+        "date": str(entry.get("date", "")).strip(),
+        "meal": meal,
+        "menu": menu,
+    }
+    menu_summary = str(entry.get("menu_summary") or "").strip()
+    if not menu_summary:
+        menu_summary = summarize_menu(meal, menu)
+    if menu_summary:
+        normalized["menu_summary"] = menu_summary
+    image_path = entry.get("image_path")
+    if image_path:
+        normalized["image_path"] = image_path
+    extracted_at = entry.get("extracted_at")
+    if extracted_at:
+        normalized["extracted_at"] = extracted_at
+    return normalized
+
+
+def migrate_store_data(data: dict[str, Any]) -> dict[str, Any]:
+    entries = [normalize_entry(entry) for entry in data.get("entries", []) if isinstance(entry, dict)]
+    entries.sort(key=lambda item: (item.get("date", ""), item.get("meal", "")))
+    today = _today_iso()
+    entries = [item for item in entries if str(item.get("date", "")) >= today]
+    return {"version": 2, "entries": entries}
 
 
 def today_iso(now: datetime | None = None) -> str:

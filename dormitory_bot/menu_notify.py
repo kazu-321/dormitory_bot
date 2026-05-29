@@ -9,7 +9,7 @@ from zoneinfo import ZoneInfo
 from .config import DEFAULT_STORE_PATH, JST, MEAL_COLORS, MEAL_LABELS_JA
 from .discord_client import send_dm_message
 from .user_data import DEFAULT_USER_DATA_PATH, filter_test_users, find_users_for_notification
-from .store import find_entry, latest_entry_for_meal, load_store, summarize_menu_name, summarize_menu_text
+from .store import find_entry, latest_entry_for_meal, menu_to_lines, parse_menu_from_text
 
 
 MEAL_ORDER = {
@@ -86,14 +86,6 @@ def _format_full_meal(entry: dict) -> str:
     return " / ".join(lines[:3]) if lines else ""
 
 
-def _format_summary_meal(entry: dict) -> str:
-    meal = str(entry.get("meal", ""))
-    summary = str(entry.get("menu_summary") or "").strip()
-    if summary:
-        return summary
-    return summarize_menu_text(meal, str(entry.get("text", "")))
-
-
 def _format_meal_label(meal: str) -> str:
     return {
         "breakfast": "朝",
@@ -128,8 +120,11 @@ def _coffee_milk_note_for_breakfast(store_path: Path, entry_date: str) -> str:
 
 
 def build_message_body(store_path: Path, current_entry: dict, current_date: str, current_meal: str) -> str:
-    current_text = str(current_entry.get("text", ""))
-    lines = _non_empty_lines(current_text)
+    menu = current_entry.get("menu")
+    if not isinstance(menu, dict):
+        menu = parse_menu_from_text(current_meal, str(current_entry.get("text", "")))
+
+    lines = menu_to_lines(current_meal, menu)
     if current_meal == "breakfast":
         coffee_milk_note = _coffee_milk_note_for_breakfast(store_path, current_date)
         if coffee_milk_note:

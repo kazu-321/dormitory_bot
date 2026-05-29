@@ -1,0 +1,153 @@
+# Menu Handoff Guide
+
+This document is the canonical reference for future chat sessions working on menu updates.
+
+## Goal
+
+- Keep menu storage structured
+- Preserve the current notification format
+- Make it easy to add menus in a new chat without rediscovering the workflow
+- Keep the project behavior consistent across future changes
+
+## Current Menu Store Schema
+
+`data/menu.json` uses `version: 2`.
+
+Each entry has:
+
+- `date`: `YYYY-MM-DD`
+- `meal`: `breakfast`, `lunch`, or `dinner`
+- `menu`: structured menu data
+- `menu_summary`: compact label used in short listings
+- `image_path`: optional reference to the source image
+- `extracted_at`: timestamp when the entry was saved
+
+`source` is no longer stored.
+
+### Breakfast / Lunch
+
+```json
+{
+  "kind": "list",
+  "items": [
+    "主菜",
+    "副菜",
+    "汁物"
+  ]
+}
+```
+
+### Dinner
+
+```json
+{
+  "kind": "dinner",
+  "a": "Aセットの主菜",
+  "b": "Bセットの主菜",
+  "common": [
+    "共通メニュー1",
+    "共通メニュー2"
+  ]
+}
+```
+
+## Menu Entry Workflow
+
+### Manual add
+
+Use `ingest.py` when adding or correcting a menu:
+
+```bash
+python3 -m dormitory_bot.ingest --meal lunch --text "ごはん\n味噌汁\n唐揚げ"
+```
+
+If you already have structured data, pass JSON directly:
+
+```bash
+python3 -m dormitory_bot.ingest --meal dinner --menu-json '{"kind":"dinner","a":"ハンバーグ","b":"魚","common":["ご飯","汁物"]}' --text "Aセット: ハンバーグ\nBセット: 魚\n共通: ご飯 / 汁物"
+```
+
+The `--text` argument is still accepted as input, but the stored form is structured `menu`.
+
+### Automatic behavior
+
+- The store keeps only today and future dates.
+- Old entries are pruned automatically when menus are saved.
+- If old data still exists, loading the store migrates it to the current structure.
+
+## Notification Behavior
+
+### Menu notifications
+
+- `dormitory_bot.menu_notify` sends only the selected meal by default.
+- The notification title is `メニュー`.
+- The body uses the current meal only, formatted as:
+
+  - `5/29 (金) お昼ご飯は`
+  - followed by a code block containing the menu lines
+
+- For breakfast only, if the previous day lunch included `コーヒー牛乳`, append ` (ｺｰﾋｰ牛乳)` to the end of the code block content.
+- Dinner details format:
+  - `(A) ...`
+  - `(B) ...`
+  - common items on separate lines
+
+### Test sending rule
+
+- After any change, send a test notification to test users.
+- Do not send to non-test users unless explicitly instructed.
+- Scheduled runs still notify all subscribed users.
+
+## Development Policy
+
+### General
+
+- Prefer structured data over free-form blobs.
+- Keep `menu.json` and the notification code in sync.
+- Update the documentation whenever the menu schema or notification format changes.
+- Use JST for menu date decisions and pruning.
+
+### Editing
+
+- Use `apply_patch` for manual file edits.
+- Keep changes minimal and targeted.
+- Do not revert unrelated user changes.
+
+### Validation
+
+- Run `python3 -m py_compile` for touched Python files when practical.
+- Use `--dry-run` to inspect notification formatting before sending.
+- For any menu change, test-send to the test user set.
+
+## Useful Commands
+
+Inspect the next menu notification locally:
+
+```bash
+python3 -m dormitory_bot.menu_notify --meal lunch --dry-run
+```
+
+Test-send to test users only:
+
+```bash
+./scripts/send_menu.sh --meal lunch --test-users-only
+```
+
+Inspect or migrate the store:
+
+```bash
+python3 - <<'PY'
+from pathlib import Path
+from dormitory_bot.store import load_store
+print(load_store(Path("data/menu.json")))
+PY
+```
+
+## Future Changes
+
+When changing the menu flow in a future chat, read this file first and keep it as the source of truth for:
+
+- schema
+- notification format
+- test-sending policy
+- pruning behavior
