@@ -34,6 +34,17 @@
       "test_user": false,
       "updated_at": "2026-05-29T18:22:10.037662+09:00",
       "user_id": "1227238276998365255"
+    },
+    {
+      "aliases": [],
+      "description": "染野",
+      "notifications": [
+        "menu"
+      ],
+      "source": "manual",
+      "test_user": false,
+      "updated_at": "2026-05-29T18:32:52.000000+09:00",
+      "user_id": "1225359761076260875"
     }
   ],
   "version": 1
