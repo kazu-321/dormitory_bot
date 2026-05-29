@@ -673,9 +673,9 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
       <section class="calendar-panel">
         <div class="calendar-toolbar">
           <div class="calendar-toolbar__group">
-            <button type="button" id="prev-month">前の月</button>
-            <button type="button" id="next-month">次の月</button>
-            <button type="button" id="go-today">今日</button>
+            <button type="button" id="prev-month" aria-label="前の月">＜</button>
+            <button type="button" id="go-today" aria-label="今日">今日</button>
+            <button type="button" id="next-month" aria-label="次の月">＞</button>
           </div>
           <div class="month-label" id="month-label"></div>
         </div>
