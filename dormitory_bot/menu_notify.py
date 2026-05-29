@@ -133,7 +133,7 @@ def build_message_body(store_path: Path, current_entry: dict, current_date: str,
         f"{_format_date_label(current_date)} {_meal_detail_title(current_meal)}\n"
         f"```text\n" + "\n".join(lines) + "\n```"
     )
-    return detail_block
+    return detail_block + "\n[メニュー一覧](https://kazu-321.github.io/dormitory_bot/menu/)"
 
 
 def build_embed(title: str, body: str, meal: str) -> dict:

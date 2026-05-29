@@ -199,6 +199,12 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
     .menu-grid {{
       display: grid;
       gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }}
+    @media (max-width: 860px) {{
+      .menu-grid {{
+        grid-template-columns: 1fr;
+      }}
     }}
     .menu-card {{
       border: 1px solid var(--line);
