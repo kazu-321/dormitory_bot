@@ -80,6 +80,7 @@ If a future chat hands you an image or PDF and asks to add it, do the parsing an
 - The menu list page shows current/future entries.
 - The calendar page shows the full history and lets you pick a date to inspect.
 - The pages are regenerated automatically whenever `data/menu.json` is saved.
+- The generated website uses the browser's current JST date for "today"; do not add a manual base-date selector unless the user explicitly asks for one.
 
 ## Notification Behavior
 

@@ -13,7 +13,6 @@ from .store import load_store, menu_to_lines, normalize_entry, summarize_menu
 
 DEFAULT_WEBSITE_DIR = BASE_DIR
 MEAL_ORDER = {"breakfast": 0, "lunch": 1, "dinner": 2}
-DATE_STORAGE_KEY = "dormitory-menu-base-date"
 
 
 def _today_iso_jst() -> str:
@@ -43,49 +42,26 @@ def _json_script_data(value: Any) -> str:
 
 
 def _date_adjustment_js() -> str:
-    return f"""
-    const DATE_STORAGE_KEY = {json.dumps(DATE_STORAGE_KEY)};
-
-    function formatDateInTimeZone(date, timeZone) {{
-      const parts = new Intl.DateTimeFormat("en-CA", {{
+    return """
+    function formatDateInTimeZone(date, timeZone) {
+      const parts = new Intl.DateTimeFormat("en-CA", {
         timeZone,
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
-      }}).formatToParts(date);
-      const mapped = {{}};
-      for (const part of parts) {{
-        if (part.type !== "literal") {{
+      }).formatToParts(date);
+      const mapped = {};
+      for (const part of parts) {
+        if (part.type !== "literal") {
           mapped[part.type] = part.value;
-        }}
-      }}
-      return `${{mapped.year}}-${{mapped.month}}-${{mapped.day}}`;
-    }}
+        }
+      }
+      return `${mapped.year}-${mapped.month}-${mapped.day}`;
+    }
 
-    function currentJstIsoDate() {{
+    function currentJstIsoDate() {
       return formatDateInTimeZone(new Date(), "Asia/Tokyo");
-    }}
-
-    function isValidIsoDate(value) {{
-      return /^\\d{{4}}-\\d{{2}}-\\d{{2}}$/.test(value || "");
-    }}
-
-    function loadBaseDate() {{
-      const params = new URLSearchParams(window.location.search);
-      const override = params.get("today") || params.get("date");
-      if (isValidIsoDate(override)) {{
-        return override;
-      }}
-      const saved = localStorage.getItem(DATE_STORAGE_KEY);
-      if (isValidIsoDate(saved)) {{
-        return saved;
-      }}
-      return currentJstIsoDate();
-    }}
-
-    function saveBaseDate(value) {{
-      localStorage.setItem(DATE_STORAGE_KEY, value);
-    }}
+    }
     """
 
 
@@ -241,45 +217,6 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
       background: var(--panel-strong);
       font-weight: 700;
     }
-    .date-controls {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.72);
-    }
-    .date-controls label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-    }
-    .date-controls input {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0 12px;
-      font: inherit;
-      background: white;
-    }
-    .date-controls button {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 14px;
-      background: var(--panel-strong);
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .date-controls__meta {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
     .meta {
       margin-top: 12px;
       color: var(--muted);
@@ -363,17 +300,11 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
     <section class="hero">
       <span class="eyebrow">Dormitory Menu</span>
       <h1>今後のメニュー</h1>
-      <p class="lead">保存された今後のメニューを一覧で見られるページです。表示基準日はブラウザ側の JST 日付で決まり、必要なら下で変更できます。</p>
+      <p class="lead">保存された今後のメニューを一覧で見られるページです。表示基準日はブラウザ側の JST 日付で決まります。</p>
       <div class="hero-links">
         <a href="../">トップへ</a>
         <a href="./">メニュー一覧</a>
         <a href="../calendar.html">カレンダーで見る</a>
-      </div>
-      <div class="date-controls">
-        <label for="base-date">基準日</label>
-        <input type="date" id="base-date" autocomplete="off">
-        <button type="button" id="reset-base-date">今日に戻す</button>
-        <div class="date-controls__meta" id="base-date-meta"></div>
       </div>
       <div class="meta">最終生成: """,
             _escape(now_label),
@@ -389,8 +320,6 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
     const DATA = JSON.parse(document.getElementById("menu-data").textContent);
     const ENTRIES = DATA.entries || [];
     const MEAL_ORDER = {"breakfast": 0, "lunch": 1, "dinner": 2};
-    const baseDateInput = document.getElementById("base-date");
-    const baseDateMeta = document.getElementById("base-date-meta");
     const results = document.getElementById("menu-results");
 """,
             _date_adjustment_js(),
@@ -481,13 +410,7 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
     }
 
     function render() {
-      const baseDate = baseDateInput.value && /^\d{4}-\d{2}-\d{2}$/.test(baseDateInput.value)
-        ? baseDateInput.value
-        : currentJstIsoDate();
-      baseDateInput.value = baseDate;
-      saveBaseDate(baseDate);
-      baseDateMeta.textContent = `表示基準: ${baseDate} 以降のメニューを表示します。`;
-
+      const baseDate = currentJstIsoDate();
       const visibleEntries = ENTRIES
         .filter((entry) => String(entry.date || "") >= baseDate)
         .slice()
@@ -518,13 +441,6 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
 
       results.innerHTML = sections.join("");
     }
-
-    baseDateInput.value = loadBaseDate();
-    baseDateInput.addEventListener("change", render);
-    document.getElementById("reset-base-date").addEventListener("click", () => {
-      baseDateInput.value = currentJstIsoDate();
-      render();
-    });
 
     render();
   </script>
@@ -639,45 +555,6 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
       border: 1px solid var(--line);
       background: var(--panel-strong);
       font-weight: 700;
-    }
-    .date-controls {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.72);
-    }
-    .date-controls label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-    }
-    .date-controls input {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0 12px;
-      font: inherit;
-      background: white;
-    }
-    .date-controls button {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 14px;
-      background: var(--panel-strong);
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .date-controls__meta {
-      color: var(--muted);
-      font-size: 0.92rem;
     }
     .meta {
       margin-top: 12px;
@@ -915,16 +792,10 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
     <section class="hero">
       <span class="eyebrow">Dormitory Menu</span>
       <h1>カレンダーで見る</h1>
-      <p class="lead">日付を選ぶと、その日の朝・昼・夜ごはんを下に表示します。基準日はブラウザの JST 日付で決まり、必要なら下で変更できます。</p>
+      <p class="lead">日付を選ぶと、その日の朝・昼・夜ごはんを下に表示します。基準日はブラウザの JST 日付で決まります。</p>
       <div class="hero-links">
         <a href="./menu/">メニュー一覧</a>
         <a href="./">トップへ</a>
-      </div>
-      <div class="date-controls">
-        <label for="base-date">基準日</label>
-        <input type="date" id="base-date" autocomplete="off">
-        <button type="button" id="reset-base-date">今日に戻す</button>
-        <div class="date-controls__meta" id="base-date-meta"></div>
       </div>
       <div class="meta">最終生成: """,
             _escape(now_label),
@@ -976,13 +847,11 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
     const selectedDateLabel = document.getElementById("selected-date-label");
     const selectedDateMeta = document.getElementById("selected-date-meta");
     const selectedDayContent = document.getElementById("selected-day-content");
-    const baseDateInput = document.getElementById("base-date");
-    const baseDateMeta = document.getElementById("base-date-meta");
 
 """,
             _date_adjustment_js(),
             """
-    let currentBaseDate = loadBaseDate();
+    let currentBaseDate = currentJstIsoDate();
     let currentMonth = startOfMonth(currentBaseDate);
     let selectedDate = currentBaseDate;
 
@@ -1087,8 +956,6 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
     }
 
     function renderAll() {
-      baseDateInput.value = currentBaseDate;
-      baseDateMeta.textContent = `表示基準: ${currentBaseDate}`;
       renderCalendar();
       renderSelectedDay();
     }
@@ -1105,27 +972,6 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
       currentBaseDate = currentJstIsoDate();
       selectedDate = currentBaseDate;
       currentMonth = startOfMonth(currentBaseDate);
-      saveBaseDate(currentBaseDate);
-      renderAll();
-    });
-
-    baseDateInput.addEventListener("change", () => {
-      if (!isValidIsoDate(baseDateInput.value)) {
-        baseDateInput.value = currentJstIsoDate();
-      }
-      currentBaseDate = baseDateInput.value;
-      saveBaseDate(currentBaseDate);
-      selectedDate = currentBaseDate;
-      currentMonth = startOfMonth(currentBaseDate);
-      renderAll();
-    });
-
-    baseDateInput.value = currentBaseDate;
-    document.getElementById("reset-base-date").addEventListener("click", () => {
-      currentBaseDate = currentJstIsoDate();
-      selectedDate = currentBaseDate;
-      currentMonth = startOfMonth(currentBaseDate);
-      saveBaseDate(currentBaseDate);
       renderAll();
     });
 

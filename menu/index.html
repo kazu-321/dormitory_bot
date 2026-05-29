@@ -82,45 +82,6 @@
       background: var(--panel-strong);
       font-weight: 700;
     }
-    .date-controls {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.72);
-    }
-    .date-controls label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-    }
-    .date-controls input {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0 12px;
-      font: inherit;
-      background: white;
-    }
-    .date-controls button {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 14px;
-      background: var(--panel-strong);
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .date-controls__meta {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
     .meta {
       margin-top: 12px;
       color: var(--muted);
@@ -204,19 +165,13 @@
     <section class="hero">
       <span class="eyebrow">Dormitory Menu</span>
       <h1>今後のメニュー</h1>
-      <p class="lead">保存された今後のメニューを一覧で見られるページです。表示基準日はブラウザ側の JST 日付で決まり、必要なら下で変更できます。</p>
+      <p class="lead">保存された今後のメニューを一覧で見られるページです。表示基準日はブラウザ側の JST 日付で決まります。</p>
       <div class="hero-links">
         <a href="../">トップへ</a>
         <a href="./">メニュー一覧</a>
         <a href="../calendar.html">カレンダーで見る</a>
       </div>
-      <div class="date-controls">
-        <label for="base-date">基準日</label>
-        <input type="date" id="base-date" autocomplete="off">
-        <button type="button" id="reset-base-date">今日に戻す</button>
-        <div class="date-controls__meta" id="base-date-meta"></div>
-      </div>
-      <div class="meta">最終生成: 2026-05-30 03:21 JST</div>
+      <div class="meta">最終生成: 2026-05-30 03:26 JST</div>
     </section>
     <section id="menu-results" aria-live="polite"></section>
     <div class="footer">GitHub Pages 向けの静的ページです。</div>
@@ -226,11 +181,7 @@
     const DATA = JSON.parse(document.getElementById("menu-data").textContent);
     const ENTRIES = DATA.entries || [];
     const MEAL_ORDER = {"breakfast": 0, "lunch": 1, "dinner": 2};
-    const baseDateInput = document.getElementById("base-date");
-    const baseDateMeta = document.getElementById("base-date-meta");
     const results = document.getElementById("menu-results");
-
-    const DATE_STORAGE_KEY = "dormitory-menu-base-date";
 
     function formatDateInTimeZone(date, timeZone) {
       const parts = new Intl.DateTimeFormat("en-CA", {
@@ -250,27 +201,6 @@
 
     function currentJstIsoDate() {
       return formatDateInTimeZone(new Date(), "Asia/Tokyo");
-    }
-
-    function isValidIsoDate(value) {
-      return /^\d{4}-\d{2}-\d{2}$/.test(value || "");
-    }
-
-    function loadBaseDate() {
-      const params = new URLSearchParams(window.location.search);
-      const override = params.get("today") || params.get("date");
-      if (isValidIsoDate(override)) {
-        return override;
-      }
-      const saved = localStorage.getItem(DATE_STORAGE_KEY);
-      if (isValidIsoDate(saved)) {
-        return saved;
-      }
-      return currentJstIsoDate();
-    }
-
-    function saveBaseDate(value) {
-      localStorage.setItem(DATE_STORAGE_KEY, value);
     }
     
     function escapeHtml(text) {
@@ -359,13 +289,7 @@
     }
 
     function render() {
-      const baseDate = baseDateInput.value && /^\d{4}-\d{2}-\d{2}$/.test(baseDateInput.value)
-        ? baseDateInput.value
-        : currentJstIsoDate();
-      baseDateInput.value = baseDate;
-      saveBaseDate(baseDate);
-      baseDateMeta.textContent = `表示基準: ${baseDate} 以降のメニューを表示します。`;
-
+      const baseDate = currentJstIsoDate();
       const visibleEntries = ENTRIES
         .filter((entry) => String(entry.date || "") >= baseDate)
         .slice()
@@ -396,13 +320,6 @@
 
       results.innerHTML = sections.join("");
     }
-
-    baseDateInput.value = loadBaseDate();
-    baseDateInput.addEventListener("change", render);
-    document.getElementById("reset-base-date").addEventListener("click", () => {
-      baseDateInput.value = currentJstIsoDate();
-      render();
-    });
 
     render();
   </script>

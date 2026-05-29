@@ -84,45 +84,6 @@
       background: var(--panel-strong);
       font-weight: 700;
     }
-    .date-controls {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.72);
-    }
-    .date-controls label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-    }
-    .date-controls input {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0 12px;
-      font: inherit;
-      background: white;
-    }
-    .date-controls button {
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 14px;
-      background: var(--panel-strong);
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .date-controls__meta {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
     .meta {
       margin-top: 12px;
       color: var(--muted);
@@ -359,18 +320,12 @@
     <section class="hero">
       <span class="eyebrow">Dormitory Menu</span>
       <h1>カレンダーで見る</h1>
-      <p class="lead">日付を選ぶと、その日の朝・昼・夜ごはんを下に表示します。基準日はブラウザの JST 日付で決まり、必要なら下で変更できます。</p>
+      <p class="lead">日付を選ぶと、その日の朝・昼・夜ごはんを下に表示します。基準日はブラウザの JST 日付で決まります。</p>
       <div class="hero-links">
         <a href="./menu/">メニュー一覧</a>
         <a href="./">トップへ</a>
       </div>
-      <div class="date-controls">
-        <label for="base-date">基準日</label>
-        <input type="date" id="base-date" autocomplete="off">
-        <button type="button" id="reset-base-date">今日に戻す</button>
-        <div class="date-controls__meta" id="base-date-meta"></div>
-      </div>
-      <div class="meta">最終生成: 2026-05-30 03:21 JST</div>
+      <div class="meta">最終生成: 2026-05-30 03:26 JST</div>
     </section>
 
     <section class="calendar-layout" aria-label="メニューカレンダー">
@@ -416,11 +371,7 @@
     const selectedDateLabel = document.getElementById("selected-date-label");
     const selectedDateMeta = document.getElementById("selected-date-meta");
     const selectedDayContent = document.getElementById("selected-day-content");
-    const baseDateInput = document.getElementById("base-date");
-    const baseDateMeta = document.getElementById("base-date-meta");
 
-
-    const DATE_STORAGE_KEY = "dormitory-menu-base-date";
 
     function formatDateInTimeZone(date, timeZone) {
       const parts = new Intl.DateTimeFormat("en-CA", {
@@ -441,29 +392,8 @@
     function currentJstIsoDate() {
       return formatDateInTimeZone(new Date(), "Asia/Tokyo");
     }
-
-    function isValidIsoDate(value) {
-      return /^\d{4}-\d{2}-\d{2}$/.test(value || "");
-    }
-
-    function loadBaseDate() {
-      const params = new URLSearchParams(window.location.search);
-      const override = params.get("today") || params.get("date");
-      if (isValidIsoDate(override)) {
-        return override;
-      }
-      const saved = localStorage.getItem(DATE_STORAGE_KEY);
-      if (isValidIsoDate(saved)) {
-        return saved;
-      }
-      return currentJstIsoDate();
-    }
-
-    function saveBaseDate(value) {
-      localStorage.setItem(DATE_STORAGE_KEY, value);
-    }
     
-    let currentBaseDate = loadBaseDate();
+    let currentBaseDate = currentJstIsoDate();
     let currentMonth = startOfMonth(currentBaseDate);
     let selectedDate = currentBaseDate;
 
@@ -568,8 +498,6 @@
     }
 
     function renderAll() {
-      baseDateInput.value = currentBaseDate;
-      baseDateMeta.textContent = `表示基準: ${currentBaseDate}`;
       renderCalendar();
       renderSelectedDay();
     }
@@ -586,27 +514,6 @@
       currentBaseDate = currentJstIsoDate();
       selectedDate = currentBaseDate;
       currentMonth = startOfMonth(currentBaseDate);
-      saveBaseDate(currentBaseDate);
-      renderAll();
-    });
-
-    baseDateInput.addEventListener("change", () => {
-      if (!isValidIsoDate(baseDateInput.value)) {
-        baseDateInput.value = currentJstIsoDate();
-      }
-      currentBaseDate = baseDateInput.value;
-      saveBaseDate(currentBaseDate);
-      selectedDate = currentBaseDate;
-      currentMonth = startOfMonth(currentBaseDate);
-      renderAll();
-    });
-
-    baseDateInput.value = currentBaseDate;
-    document.getElementById("reset-base-date").addEventListener("click", () => {
-      currentBaseDate = currentJstIsoDate();
-      selectedDate = currentBaseDate;
-      currentMonth = startOfMonth(currentBaseDate);
-      saveBaseDate(currentBaseDate);
       renderAll();
     });
 
