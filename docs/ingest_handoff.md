@@ -21,6 +21,8 @@ When a chat includes a menu image or PDF and asks to "add it", the expected beha
 6. Regenerate the static site (`index.html`, `calendar.html`, `menu/index.html`) after saving.
 7. If the source path is available locally, keep it in `image_path` for provenance.
 
+This workflow is meant to be followed by Codex in future chats as well. The assistant should do the parsing and JSON update itself; the user should not need to run a separate ingest script.
+
 No dedicated ingest CLI is required. Parse the attachment in-place and update `data/menu.json` directly with structured `menu` data.
 
 If structured data is already known, write the JSON-shaped `menu` directly and keep `menu_summary` short and stable.
@@ -43,6 +45,16 @@ python3 -m dormitory_bot.user_data --user-id 123456789012345678 --description "ç
 ```
 
 If the user is only for test sends, add `--test-user`.
+
+## New Chat Reminder
+
+In a fresh chat, if the user says "attach this PDF/image and add it", follow this document and perform the extraction/update directly. The expected outcome is:
+
+- parse the attachment
+- choose a short `menu_summary`
+- upsert into `data/menu.json`
+- regenerate the site files
+- send a test notification to test users for menu changes
 
 ## Source of Truth
 

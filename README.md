@@ -13,7 +13,7 @@
 
 ## よく使うもの
 
-- メニュー追加: Codexに依頼して `data/menu.json` を更新
+- メニュー追加: 画像/PDFを添付して「追加して」と依頼すると、Codex が `data/menu.json` を直接更新する
 - メニュー通知: `python3 -m dormitory_bot.menu_notify`
 - 掃除通知: `python3 -m dormitory_bot.cleaning_notify`
 - 公開用のメニュー一覧: `menu/index.html`

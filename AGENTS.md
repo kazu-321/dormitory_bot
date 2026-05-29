@@ -72,10 +72,10 @@ If you are about to touch attachment ingestion or user registry updates, also re
 
 When adding or correcting a menu entry:
 
+- In any new chat, if the user attaches a menu image or PDF and says to add it, Codex should parse it and write the result directly to `data/menu.json`.
+- Do not ask the user to run a helper script for menu ingestion.
 - Attachments are parsed directly in the workspace and written to `data/menu.json` as structured data.
 - Prefer structured `menu` data.
-- Use `--menu-json` when the structure is already known.
-- Use `--text` only as the source input to be parsed into structure.
 - Let the tool compute `menu_summary` unless the user explicitly provides one.
 
 ## Escalation

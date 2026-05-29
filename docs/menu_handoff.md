@@ -60,6 +60,10 @@ Add or correct menu entries by parsing the attachment or provided text directly 
 
 If the structure is already known, store it as JSON-shaped `menu` data rather than a free-form blob.
 
+### Future Chat Behavior
+
+If a future chat hands you an image or PDF and asks to add it, do the parsing and update yourself. Do not direct the user to a helper script or ask them to transcribe the menu manually unless the attachment is unreadable.
+
 ### Automatic behavior
 
 - The store keeps historical entries unless you explicitly delete them.
