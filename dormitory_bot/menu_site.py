@@ -447,22 +447,6 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
       .detail-panel {{
         padding: 16px;
       }}
-      .calendar-toolbar {{
-        flex-direction: column;
-        align-items: stretch;
-      }}
-      .calendar-toolbar__group {{
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }}
-      .calendar-toolbar button {{
-        width: 100%;
-        padding: 0 10px;
-      }}
-      .month-label {{
-        text-align: left;
-      }}
       .weekday-row,
       .calendar-grid {{
         gap: 6px;
@@ -514,6 +498,24 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
     .month-label {{
       font-weight: 800;
       font-size: 1.1rem;
+    }}
+    @media (max-width: 640px) {{
+      .calendar-toolbar {{
+        flex-direction: column;
+        align-items: stretch;
+      }}
+      .calendar-toolbar__group {{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }}
+      .calendar-toolbar button {{
+        width: 100%;
+        padding: 0 10px;
+      }}
+      .month-label {{
+        text-align: left;
+      }}
     }}
     .weekday-row,
     .calendar-grid {{
