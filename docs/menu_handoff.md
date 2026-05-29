@@ -56,19 +56,9 @@ Each entry has:
 
 ### Manual add
 
-Use `scripts/ingest_menu.py` when adding or correcting a menu:
+Add or correct menu entries by parsing the attachment or provided text directly into structured data and updating `data/menu.json`.
 
-```bash
-python3 scripts/ingest_menu.py --meal lunch --text "ごはん\n味噌汁\n唐揚げ"
-```
-
-If you already have structured data, pass JSON directly:
-
-```bash
-python3 scripts/ingest_menu.py --meal dinner --menu-json '{"kind":"dinner","a":"ハンバーグ","b":"魚","common":["ご飯","汁物"]}' --text "Aセット: ハンバーグ\nBセット: 魚\n共通: ご飯 / 汁物"
-```
-
-The `--text` argument is still accepted as input, but the stored form is structured `menu`.
+If the structure is already known, store it as JSON-shaped `menu` data rather than a free-form blob.
 
 ### Automatic behavior
 

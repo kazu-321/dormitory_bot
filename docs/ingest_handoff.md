@@ -21,13 +21,9 @@ When a chat includes a menu image or PDF and asks to "add it", the expected beha
 6. Regenerate the static site (`index.html`, `calendar.html`, `menu/index.html`) after saving.
 7. If the source path is available locally, keep it in `image_path` for provenance.
 
-Recommended command:
+No dedicated ingest CLI is required. Parse the attachment in-place and update `data/menu.json` directly with structured `menu` data.
 
-```bash
-python3 scripts/ingest_menu.py --meal lunch --date 2026-05-29 --text "..." --image-path /path/to/source.pdf
-```
-
-If structured data is already known, prefer `--menu-json`.
+If structured data is already known, write the JSON-shaped `menu` directly and keep `menu_summary` short and stable.
 
 ## User Registry Workflow
 

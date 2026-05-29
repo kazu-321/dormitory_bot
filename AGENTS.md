@@ -54,7 +54,6 @@ If you are about to touch attachment ingestion or user registry updates, also re
 - [docs/ingest_handoff.md](/home/kazu/dormitory/docs/ingest_handoff.md): attachment parsing and user registry workflow.
 - `dormitory_bot/store.py`: menu storage, migration, parsing, summary helpers.
 - `dormitory_bot/menu_site.py`: static site generation for GitHub Pages.
-- `scripts/ingest_menu.py`: add or correct menu entries.
 - `dormitory_bot/menu_notify.py`: build and send menu notifications.
 - `dormitory_bot/user_data.py`: save Discord user records and notification subscriptions.
 
@@ -73,7 +72,7 @@ If you are about to touch attachment ingestion or user registry updates, also re
 
 When adding or correcting a menu entry:
 
-- Use `scripts/ingest_menu.py`.
+- Attachments are parsed directly in the workspace and written to `data/menu.json` as structured data.
 - Prefer structured `menu` data.
 - Use `--menu-json` when the structure is already known.
 - Use `--text` only as the source input to be parsed into structure.
