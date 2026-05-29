@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>メニューカレンダー</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --panel: rgba(255, 255, 255, 0.88);
+      --panel-strong: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: rgba(31, 41, 55, 0.12);
+      --accent: #4e79a7;
+      --accent-soft: rgba(78, 121, 167, 0.12);
+      --shadow: 0 18px 48px rgba(31, 41, 55, 0.12);
+      --today: #f28c28;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(78, 121, 167, 0.18), transparent 34%),
+        radial-gradient(circle at top right, rgba(242, 140, 40, 0.16), transparent 28%),
+        linear-gradient(180deg, #faf7f2 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+    a { color: inherit; }
+    button {
+      font: inherit;
+    }
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    .hero {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    h1 {
+      margin: 14px 0 8px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+    }
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .hero-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      font-weight: 700;
+    }
+    .meta {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .calendar-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 18px;
+      margin-top: 24px;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .calendar-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .calendar-panel,
+      .detail-panel {
+        padding: 16px;
+      }
+      .calendar-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .calendar-toolbar__group {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .calendar-toolbar button {
+        width: 100%;
+      }
+      #go-today {
+        grid-column: 1 / -1;
+      }
+      .month-label {
+        text-align: left;
+      }
+      .weekday-row,
+      .calendar-grid {
+        gap: 6px;
+      }
+      .calendar-cell {
+        min-height: 68px;
+        padding: 8px;
+      }
+    }
+    .calendar-panel,
+    .detail-panel {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+    .calendar-panel {
+      padding: 20px;
+    }
+    .detail-panel {
+      padding: 20px;
+    }
+    .calendar-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .calendar-toolbar__group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .calendar-toolbar button {
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .month-label {
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+    .weekday-row,
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .weekday-row {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .weekday-row div {
+      text-align: center;
+      padding: 6px 0;
+    }
+    .calendar-grid {
+      align-items: stretch;
+    }
+    .calendar-cell {
+      min-height: 76px;
+      border: 1px solid rgba(31, 41, 55, 0.08);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.82);
+      padding: 10px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+    }
+    .calendar-cell:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(31, 41, 55, 0.08);
+    }
+    .calendar-cell.is-empty {
+      cursor: default;
+      background: transparent;
+      border-style: dashed;
+      border-color: transparent;
+      box-shadow: none;
+    }
+    .calendar-cell__day {
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+    .calendar-cell__dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: transparent;
+    }
+    .calendar-cell.has-data .calendar-cell__dot {
+      background: var(--accent);
+    }
+    .calendar-cell.is-today {
+      border-color: rgba(242, 140, 40, 0.65);
+    }
+    .calendar-cell.is-selected {
+      border-color: var(--today);
+      box-shadow: 0 0 0 2px rgba(242, 140, 40, 0.14) inset;
+    }
+    .selected-date {
+      margin: 0 0 4px;
+      font-size: 1.4rem;
+    }
+    .selected-meta {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .calendar-day-cards {
+      display: grid;
+      gap: 12px;
+    }
+    .menu-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel-strong);
+      box-shadow: 0 8px 24px rgba(31, 41, 55, 0.06);
+      padding: 16px 18px;
+    }
+    .menu-card__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .menu-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: white;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: #6b7280;
+    }
+    .meal-breakfast .menu-badge { background: #f4c542; color: #3b2f0f; }
+    .meal-lunch .menu-badge { background: #f28c28; }
+    .meal-dinner .menu-badge { background: #4e79a7; }
+    .menu-summary {
+      font-size: 1.04rem;
+      font-weight: 700;
+    }
+    .menu-detail {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.7;
+    }
+    .menu-detail li + li {
+      margin-top: 4px;
+    }
+    .empty-state {
+      margin-top: 10px;
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .empty-state h3 {
+      margin: 0 0 8px;
+    }
+    .empty-state p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <span class="eyebrow">Dormitory Menu</span>
+      <h1>カレンダーで見る</h1>
+      <p class="lead">日付を選ぶと、その日の朝・昼・夜ごはんを下に表示します。過去のメニューもさかのぼって見られます。</p>
+      <div class="hero-links">
+        <a href="./menu/">メニュー一覧</a>
+        <a href="./">トップへ</a>
+      </div>
+      <div class="meta">最終生成: 2026-05-29 18:15 JST</div>
+    </section>
+
+    <section class="calendar-layout" aria-label="メニューカレンダー">
+      <section class="calendar-panel">
+        <div class="calendar-toolbar">
+          <div class="calendar-toolbar__group">
+            <button type="button" id="prev-month">前の月</button>
+            <button type="button" id="next-month">次の月</button>
+            <button type="button" id="go-today">今日</button>
+          </div>
+          <div class="month-label" id="month-label"></div>
+        </div>
+        <div class="weekday-row" aria-hidden="true">
+          <div>月</div>
+          <div>火</div>
+          <div>水</div>
+          <div>木</div>
+          <div>金</div>
+          <div>土</div>
+          <div>日</div>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </section>
+
+      <section class="detail-panel" aria-live="polite">
+        <h2 class="selected-date" id="selected-date-label"></h2>
+        <p class="selected-meta" id="selected-date-meta"></p>
+        <div id="selected-day-content"></div>
+      </section>
+    </section>
+
+    <div class="footer">GitHub Pages 向けの静的ページです。</div>
+  </main>
+
+  <script id="calendar-data" type="application/json">{"today": "2026-05-29", "days": {"2026-05-25": {"label": "5/25 (月)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">オムレツ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>プレーンオムレツ<\/li><li>ハムと野菜のカレー炒め<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">味噌タンメン<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>味噌タンメン<\/li><li>焼売<\/li><li>たいやき<\/li><li>ご飯<\/li><li>カップヨーグルト<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">グリルチキン / オイスターソース炒め<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) グリルチキン<\/li><li>(B) 豚と野菜のオイスターソース炒め<\/li><li>塩コーンポテト<\/li><li>ジョア<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-05-26": {"label": "5/26 (火)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">メンチカツ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>メンチカツ<\/li><li>ひじきと枝豆の煮物<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">ハンバーグ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>ロコモコハンバーグ 温玉添え<\/li><li>玉ねぎとハムのマリネ<\/li><li>蒟蒻ピーチゼリー<\/li><li>汁物<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">ベーコンオニオンソース / 麻婆春雨<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) ベーコンオニオンソース<\/li><li>(B) 麻婆春雨<\/li><li>おくらのわさび醤油<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-05-27": {"label": "5/27 (水)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">野菜たっぷり卵焼き<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>野菜たっぷり卵焼き<\/li><li>青梗菜とえのきのお浸し<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">うどん<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>イカ天ぷらうどん<\/li><li>肉団子の旨煮<\/li><li>フルーチェ ぶどう<\/li><li>ご飯<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">フライ / 生姜焼き<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) アジフライ ラビゴットソース<\/li><li>(B) 豚肉のトマト生姜焼きセット<\/li><li>根菜のグリル<\/li><li>ヤクルト<\/li><li>ご飯<\/li><\/ul>\n      <\/article>\n    "}, "2026-05-28": {"label": "5/28 (木)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">そぼろ肉じゃが<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>そぼろ肉じゃが<\/li><li>春雨サラダ<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">プルコギポーク<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>プルコギポーク<\/li><li>春巻<\/li><li>グレープフルーツゼリー<\/li><li>ご飯・汁物<\/li><li>コーヒー牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">あんかけ / 一味唐辛子焼き<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) 揚げ出し豆腐のあんかけ<\/li><li>(B) 鶏肉の一味唐辛子焼き<\/li><li>白菜とハムの炒め<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-05-29": {"label": "5/29 (金)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">豚野菜炒め<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>豚野菜炒め<\/li><li>和風マカロニサラダ<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">ハヤシライス<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>ハヤシライス<\/li><li>カラフルサラダ<\/li><li>フルーツヨーグルト<\/li><li>ご飯・汁物<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">ハンバーグ / カレーマヨ焼き<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) ハンバーグジンジャーソース<\/li><li>(B) ホキのカレーマヨ焼き<\/li><li>蒸し鶏と胡瓜の梅和え<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-05-30": {"label": "5/30 (土)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">肉団子<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>照焼き肉団子<\/li><li>かぼちゃとブロッコリーのサラダ<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">BBQチキン<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>BBQチキン<\/li><li>ケチャップスパゲッティー<\/li><li>パイン寒天ゼリー<\/li><li>ご飯・汁物<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">甘辛きんぴら<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) 豚と根菜の甘辛きんぴら<\/li><li>青菜と白菜のぽん酢がけ<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-05-31": {"label": "5/31 (日)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">スクランブルエッグ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>ホウレン草のスクランブルエッグ<\/li><li>キャベツと筍の炒め煮<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">焼肉<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>豚焼肉ともやしのねぎソース<\/li><li>餃子<\/li><li>フルーチェ イチゴ<\/li><li>ご飯・汁物<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">チキンカツ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) ポテトコロッケ＆チキンカツ<\/li><li>ジュース<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-06-01": {"label": "6/1 (月)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">オムレツ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>ミートオムレツ<\/li><li>もやしとほうれん草のナムル<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">冷やし中華<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>冷やし中華<\/li><li>切干大根のコールスローサラダ<\/li><li>プチシュー<\/li><li>ご飯<\/li><li>カップヨーグルト<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">ハンバーグ / うま煮<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) ハンバーグデミグラスソース＆焼きコロッケ<\/li><li>(B) 豚肉と野菜のうま煮<\/li><li>ベーコンとポテトのガーリック醤油炒め<\/li><li>ジョア<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-06-02": {"label": "6/2 (火)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">和風マーボ豆腐<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>和風マーボ豆腐<\/li><li>かぼちゃとブロッコリーのサラダ<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">チキンガーリックライス<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>チキンガーリックライス<\/li><li>青梗菜とえのきのさっぱり和え<\/li><li>青りんごゼリー<\/li><li>汁物<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">カレー / 中華香味ソース<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) 豚と野菜のカレー炒め<\/li><li>(B) ホキの中華香味ソース<\/li><li>いんげんと卵の炒め煮<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-06-03": {"label": "6/3 (水)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">肉団子<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>照焼き肉団子<\/li><li>蒸し鶏と野菜のレモンマリネ<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">うどん<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>豚キムチ温玉冷やしうどん<\/li><li>コーンフライ<\/li><li>蒟蒻ぶどうゼリー<\/li><li>ご飯<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">チキンソテー / 麻婆春雨ソース<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) チキンソテー<\/li><li>(B) 麻婆春雨ソース<\/li><li>ブロッコリーとパプリカのナムル<\/li><li>ヤクルト<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-06-04": {"label": "6/4 (木)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">フライ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>ピーマン肉詰めフライ<\/li><li>ハム野菜炒め<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">から揚げ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>鶏のから揚げ<\/li><li>小松菜のみかんおろし<\/li><li>みたらし白玉<\/li><li>ご飯・汁物<\/li><li>コーヒー牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">【アメリカ】バッファローチキン / 豚きんぴら<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) 【アメリカ】バッファローチキン<\/li><li>(B) 豚きんぴら<\/li><li>レンコンの肉巻き揚げ<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-06-05": {"label": "6/5 (金)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">唐揚げ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>唐揚げと野菜の生姜煮<\/li><li>ほうれん草と人参のソテー<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">カレーライス<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>カレーライス（豚）<\/li><li>緑野菜のシーザーサラダ<\/li><li>キャラメルミルクプリン<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">温野菜炒め / きんぴら<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) 豚肉とキャベツの温野菜炒め<\/li><li>(B) 山菜とこんにゃくのきんぴら<\/li><li>ジュース<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-06-06": {"label": "6/6 (土)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">餃子<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>香味焼き餃子<\/li><li>さつま芋サラダ<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">オイスターソース炒め<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>豚肉と小松菜のオイスターソース炒め<\/li><li>小松菜のお浸し<\/li><li>みかん寒天ゼリー<\/li><li>ご飯・汁物<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">チキンカツ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) チキンカツ<\/li><li>きゅうりの和風ピクルス<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}, "2026-06-07": {"label": "6/7 (日)", "count": 3, "cards_html": "\n      <article class=\"menu-card meal-breakfast\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">朝<\/span>\n          <span class=\"menu-summary\">ミックススクランブル<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>ミックススクランブル<\/li><li>枝豆コーンサラダ<\/li><li>シリアル<\/li><li>漬物・海苔・納豆<\/li><li>汁物・牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-lunch\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">昼<\/span>\n          <span class=\"menu-summary\">中華和え<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>豚とキャベツの中華和え<\/li><li>フルーチェ ミックスオレンジ<\/li><li>ご飯・汁物<\/li><li>牛乳<\/li><\/ul>\n      <\/article>\n    \n      <article class=\"menu-card meal-dinner\">\n        <div class=\"menu-card__header\">\n          <span class=\"menu-badge\">夜<\/span>\n          <span class=\"menu-summary\">チャプチェ<\/span>\n        <\/div>\n        <ul class=\"menu-detail\"><li>(A) チャプチェ<\/li><li>きゅうりの和風ピクルス<\/li><li>ご飯<\/li><li>汁物<\/li><\/ul>\n      <\/article>\n    "}}}</script>
+  <script>
+    const WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"];
+    const DATA = JSON.parse(document.getElementById("calendar-data").textContent);
+    const DAYS = DATA.days || {};
+    const DAY_KEYS = Object.keys(DAYS).sort();
+    const TODAY = DATA.today;
+
+    const monthLabel = document.getElementById("month-label");
+    const calendarGrid = document.getElementById("calendar-grid");
+    const selectedDateLabel = document.getElementById("selected-date-label");
+    const selectedDateMeta = document.getElementById("selected-date-meta");
+    const selectedDayContent = document.getElementById("selected-day-content");
+
+    let currentMonth = startOfMonth(TODAY);
+    let selectedDate = TODAY;
+
+    function parseDate(dateString) {
+      const [year, month, day] = dateString.split("-").map(Number);
+      return new Date(Date.UTC(year, month - 1, day));
+    }
+
+    function isoDate(date) {
+      return date.toISOString().slice(0, 10);
+    }
+
+    function addDays(date, amount) {
+      return new Date(date.getTime() + amount * 86400000);
+    }
+
+    function startOfMonth(dateString) {
+      const date = parseDate(dateString);
+      return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1));
+    }
+
+    function formatDateLabel(dateString) {
+      const date = parseDate(dateString);
+      const weekday = WEEKDAYS[(date.getUTCDay() + 6) % 7];
+      return `${date.getUTCMonth() + 1}/${date.getUTCDate()} (${weekday})`;
+    }
+
+    function formatMonthLabel(date) {
+      return new Intl.DateTimeFormat("ja-JP", {
+        year: "numeric",
+        month: "long",
+        timeZone: "UTC",
+      }).format(date);
+    }
+
+    function shiftMonth(date, amount) {
+      return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + amount, 1));
+    }
+
+    function renderCalendar() {
+      monthLabel.textContent = formatMonthLabel(currentMonth);
+      calendarGrid.innerHTML = "";
+
+      const firstWeekday = (currentMonth.getUTCDay() + 6) % 7;
+      const daysInMonth = new Date(Date.UTC(currentMonth.getUTCFullYear(), currentMonth.getUTCMonth() + 1, 0)).getUTCDate();
+
+      for (let index = 0; index < firstWeekday; index += 1) {
+        const empty = document.createElement("div");
+        empty.className = "calendar-cell is-empty";
+        calendarGrid.appendChild(empty);
+      }
+
+      for (let day = 1; day <= daysInMonth; day += 1) {
+        const cellDate = new Date(Date.UTC(currentMonth.getUTCFullYear(), currentMonth.getUTCMonth(), day));
+        const dateString = isoDate(cellDate);
+        const cell = document.createElement("button");
+        cell.type = "button";
+        cell.className = "calendar-cell";
+        cell.innerHTML = `
+          <div class="calendar-cell__day">${day}</div>
+          <div class="calendar-cell__dot"></div>
+        `;
+
+        if (dateString === TODAY) {
+          cell.classList.add("is-today");
+        }
+        if (dateString === selectedDate) {
+          cell.classList.add("is-selected");
+        }
+        if (DAYS[dateString]) {
+          cell.classList.add("has-data");
+        }
+
+        cell.addEventListener("click", () => {
+          selectedDate = dateString;
+          currentMonth = startOfMonth(dateString);
+          renderAll();
+        });
+
+        calendarGrid.appendChild(cell);
+      }
+    }
+
+    function renderSelectedDay() {
+      const day = DAYS[selectedDate];
+      selectedDateLabel.textContent = formatDateLabel(selectedDate);
+      selectedDateMeta.textContent = day
+        ? `${day.count} 件のメニューがあります。`
+        : "この日付にはまだメニューがありません。";
+
+      if (!day) {
+        selectedDayContent.innerHTML = `
+          <section class="empty-state">
+            <h3>メニューがありません</h3>
+            <p>別の日付を選ぶと、その日のメニューを表示できます。</p>
+          </section>
+        `;
+        return;
+      }
+
+      selectedDayContent.innerHTML = `
+        <div class="calendar-day-cards">
+          ${day.cards_html}
+        </div>
+      `;
+    }
+
+    function renderAll() {
+      renderCalendar();
+      renderSelectedDay();
+    }
+
+    document.getElementById("prev-month").addEventListener("click", () => {
+      currentMonth = shiftMonth(currentMonth, -1);
+      renderCalendar();
+    });
+    document.getElementById("next-month").addEventListener("click", () => {
+      currentMonth = shiftMonth(currentMonth, 1);
+      renderCalendar();
+    });
+    document.getElementById("go-today").addEventListener("click", () => {
+      selectedDate = TODAY;
+      currentMonth = startOfMonth(TODAY);
+      renderAll();
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>

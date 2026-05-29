@@ -17,6 +17,7 @@
 - メニュー通知: `python3 -m dormitory_bot.menu_notify`
 - 掃除通知: `python3 -m dormitory_bot.cleaning_notify`
 - 公開用のメニュー一覧: `menu/index.html`
+- 過去も見られるカレンダー: `calendar.html`
 
 ## メモ
 

@@ -70,8 +70,6 @@ def upsert_entry(entry: MenuEntry, path: Path = DEFAULT_STORE_PATH) -> dict[str,
     if not updated:
         entries.append(entry.to_dict())
     entries.sort(key=lambda item: (item.get("date", ""), item.get("meal", "")))
-    today = _today_iso()
-    entries = [item for item in entries if str(item.get("date", "")) >= today]
     data["entries"] = entries
     save_store(data, path)
     return data
@@ -275,8 +273,6 @@ def normalize_entry(entry: dict[str, Any]) -> dict[str, Any]:
 def migrate_store_data(data: dict[str, Any]) -> dict[str, Any]:
     entries = [normalize_entry(entry) for entry in data.get("entries", []) if isinstance(entry, dict)]
     entries.sort(key=lambda item: (item.get("date", ""), item.get("meal", "")))
-    today = _today_iso()
-    entries = [item for item in entries if str(item.get("date", "")) >= today]
     return {"version": 2, "entries": entries}
 
 

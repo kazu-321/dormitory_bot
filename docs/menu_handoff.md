@@ -8,6 +8,7 @@ This document is the canonical reference for future chat sessions working on men
 - Preserve the current notification format
 - Make it easy to add menus in a new chat without rediscovering the workflow
 - Keep the project behavior consistent across future changes
+- Keep historical menu data available for browsing
 
 ## Current Menu Store Schema
 
@@ -71,17 +72,19 @@ The `--text` argument is still accepted as input, but the stored form is structu
 
 ### Automatic behavior
 
-- The store keeps only today and future dates.
-- Old entries are pruned automatically when menus are saved.
+- The store keeps historical entries unless you explicitly delete them.
 - If old data still exists, loading the store migrates it to the current structure.
-- Saving a menu also regenerates the static website at the repository root.
+- Saving a menu regenerates the static website at the repository root.
 
 ## Website Output
 
 - Root page: `index.html`
+- Calendar page: `calendar.html`
 - Menu list page: `menu/index.html`
 - The pages are static and GitHub Pages compatible.
-- The menu page is regenerated automatically whenever `data/menu.json` is saved.
+- The menu list page shows current/future entries.
+- The calendar page shows the full history and lets you pick a date to inspect.
+- The pages are regenerated automatically whenever `data/menu.json` is saved.
 
 ## Notification Behavior
 
@@ -113,7 +116,7 @@ The `--text` argument is still accepted as input, but the stored form is structu
 - Prefer structured data over free-form blobs.
 - Keep `menu.json` and the notification code in sync.
 - Update the documentation whenever the menu schema or notification format changes.
-- Use JST for menu date decisions and pruning.
+- Use JST for menu date decisions.
 
 ### Editing
 
@@ -158,4 +161,4 @@ When changing the menu flow in a future chat, read this file first and keep it a
 - schema
 - notification format
 - test-sending policy
-- pruning behavior
+- history retention
