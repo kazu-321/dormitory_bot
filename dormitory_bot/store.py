@@ -53,6 +53,9 @@ def save_store(data: dict[str, Any], path: Path = DEFAULT_STORE_PATH) -> None:
     ensure_store(path)
     data = migrate_store_data(data)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    from .menu_site import write_menu_site
+
+    write_menu_site(path)
 
 
 def upsert_entry(entry: MenuEntry, path: Path = DEFAULT_STORE_PATH) -> dict[str, Any]:

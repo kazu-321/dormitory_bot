@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>今後のメニュー</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --panel: rgba(255, 255, 255, 0.88);
+      --panel-strong: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: rgba(31, 41, 55, 0.12);
+      --accent: #f28c28;
+      --accent-soft: rgba(242, 140, 40, 0.12);
+      --shadow: 0 18px 48px rgba(31, 41, 55, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(242, 140, 40, 0.18), transparent 34%),
+        radial-gradient(circle at top right, rgba(78, 121, 167, 0.16), transparent 28%),
+        linear-gradient(180deg, #faf7f2 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+    a { color: inherit; }
+    .shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    .hero {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    h1 {
+      margin: 14px 0 8px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+    }
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .hero-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      font-weight: 700;
+    }
+    .meta {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .date-section {
+      margin-top: 24px;
+      padding-top: 8px;
+    }
+    .date-section h2 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+    }
+    .menu-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .menu-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 8px 24px rgba(31, 41, 55, 0.06);
+      padding: 16px 18px;
+    }
+    .menu-card__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: white;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: #6b7280;
+    }
+    .meal-breakfast .menu-badge { background: #f4c542; color: #3b2f0f; }
+    .meal-lunch .menu-badge { background: #f28c28; }
+    .meal-dinner .menu-badge { background: #4e79a7; }
+    .menu-summary {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .menu-detail {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .menu-detail li + li {
+      margin-top: 4px;
+    }
+    .empty-state {
+      margin-top: 24px;
+      padding: 24px;
+      border: 1px dashed var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <span class="eyebrow">Dormitory Menu</span>
+      <h1>今後のメニュー</h1>
+      <p class="lead">保存された今後のメニューを一覧で見られるページです。メニューが更新されると HTML も自動で更新されます。</p>
+      <div class="hero-links">
+        <a href="../">トップへ</a>
+        <a href="./">メニュー一覧</a>
+      </div>
+      <div class="meta">最終生成: 2026-05-29 17:48 JST</div>
+    </section>
+    
+                <section class="date-section">
+                  <h2>5/29 (金)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">豚野菜炒め</span>
+        </div>
+        <ul class="menu-detail"><li>豚野菜炒め</li><li>和風マカロニサラダ</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">ハヤシライス</span>
+        </div>
+        <ul class="menu-detail"><li>ハヤシライス</li><li>カラフルサラダ</li><li>フルーツヨーグルト</li><li>ご飯・汁物</li><li>牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">ハンバーグ / カレーマヨ焼き</span>
+        </div>
+        <ul class="menu-detail"><li>(A) ハンバーグジンジャーソース</li><li>(B) ホキのカレーマヨ焼き</li><li>蒸し鶏と胡瓜の梅和え</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>5/30 (土)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">肉団子</span>
+        </div>
+        <ul class="menu-detail"><li>照焼き肉団子</li><li>かぼちゃとブロッコリーのサラダ</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">BBQチキン</span>
+        </div>
+        <ul class="menu-detail"><li>BBQチキン</li><li>ケチャップスパゲッティー</li><li>パイン寒天ゼリー</li><li>ご飯・汁物</li><li>牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">甘辛きんぴら</span>
+        </div>
+        <ul class="menu-detail"><li>(A) 豚と根菜の甘辛きんぴら</li><li>青菜と白菜のぽん酢がけ</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>5/31 (日)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">スクランブルエッグ</span>
+        </div>
+        <ul class="menu-detail"><li>ホウレン草のスクランブルエッグ</li><li>キャベツと筍の炒め煮</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">焼肉</span>
+        </div>
+        <ul class="menu-detail"><li>豚焼肉ともやしのねぎソース</li><li>餃子</li><li>フルーチェ イチゴ</li><li>ご飯・汁物</li><li>牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">チキンカツ</span>
+        </div>
+        <ul class="menu-detail"><li>(A) ポテトコロッケ＆チキンカツ</li><li>ジュース</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>6/1 (月)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">オムレツ</span>
+        </div>
+        <ul class="menu-detail"><li>ミートオムレツ</li><li>もやしとほうれん草のナムル</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">冷やし中華</span>
+        </div>
+        <ul class="menu-detail"><li>冷やし中華</li><li>切干大根のコールスローサラダ</li><li>プチシュー</li><li>ご飯</li><li>カップヨーグルト</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">ハンバーグ / うま煮</span>
+        </div>
+        <ul class="menu-detail"><li>(A) ハンバーグデミグラスソース＆焼きコロッケ</li><li>(B) 豚肉と野菜のうま煮</li><li>ベーコンとポテトのガーリック醤油炒め</li><li>ジョア</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>6/2 (火)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">和風マーボ豆腐</span>
+        </div>
+        <ul class="menu-detail"><li>和風マーボ豆腐</li><li>かぼちゃとブロッコリーのサラダ</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">チキンガーリックライス</span>
+        </div>
+        <ul class="menu-detail"><li>チキンガーリックライス</li><li>青梗菜とえのきのさっぱり和え</li><li>青りんごゼリー</li><li>汁物</li><li>牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">カレー / 中華香味ソース</span>
+        </div>
+        <ul class="menu-detail"><li>(A) 豚と野菜のカレー炒め</li><li>(B) ホキの中華香味ソース</li><li>いんげんと卵の炒め煮</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>6/3 (水)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">肉団子</span>
+        </div>
+        <ul class="menu-detail"><li>照焼き肉団子</li><li>蒸し鶏と野菜のレモンマリネ</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">うどん</span>
+        </div>
+        <ul class="menu-detail"><li>豚キムチ温玉冷やしうどん</li><li>コーンフライ</li><li>蒟蒻ぶどうゼリー</li><li>ご飯</li><li>牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">チキンソテー / 麻婆春雨ソース</span>
+        </div>
+        <ul class="menu-detail"><li>(A) チキンソテー</li><li>(B) 麻婆春雨ソース</li><li>ブロッコリーとパプリカのナムル</li><li>ヤクルト</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>6/4 (木)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">フライ</span>
+        </div>
+        <ul class="menu-detail"><li>ピーマン肉詰めフライ</li><li>ハム野菜炒め</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">から揚げ</span>
+        </div>
+        <ul class="menu-detail"><li>鶏のから揚げ</li><li>小松菜のみかんおろし</li><li>みたらし白玉</li><li>ご飯・汁物</li><li>コーヒー牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">【アメリカ】バッファローチキン / 豚きんぴら</span>
+        </div>
+        <ul class="menu-detail"><li>(A) 【アメリカ】バッファローチキン</li><li>(B) 豚きんぴら</li><li>レンコンの肉巻き揚げ</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>6/5 (金)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">唐揚げ</span>
+        </div>
+        <ul class="menu-detail"><li>唐揚げと野菜の生姜煮</li><li>ほうれん草と人参のソテー</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">カレーライス</span>
+        </div>
+        <ul class="menu-detail"><li>カレーライス（豚）</li><li>緑野菜のシーザーサラダ</li><li>キャラメルミルクプリン</li><li>牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">温野菜炒め / きんぴら</span>
+        </div>
+        <ul class="menu-detail"><li>(A) 豚肉とキャベツの温野菜炒め</li><li>(B) 山菜とこんにゃくのきんぴら</li><li>ジュース</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>6/6 (土)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">餃子</span>
+        </div>
+        <ul class="menu-detail"><li>香味焼き餃子</li><li>さつま芋サラダ</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">オイスターソース炒め</span>
+        </div>
+        <ul class="menu-detail"><li>豚肉と小松菜のオイスターソース炒め</li><li>小松菜のお浸し</li><li>みかん寒天ゼリー</li><li>ご飯・汁物</li><li>牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">チキンカツ</span>
+        </div>
+        <ul class="menu-detail"><li>(A) チキンカツ</li><li>きゅうりの和風ピクルス</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+
+                <section class="date-section">
+                  <h2>6/7 (日)</h2>
+                  <div class="menu-grid">
+                    
+      <article class="menu-card meal-breakfast">
+        <div class="menu-card__header">
+          <span class="menu-badge">朝</span>
+          <span class="menu-summary">ミックススクランブル</span>
+        </div>
+        <ul class="menu-detail"><li>ミックススクランブル</li><li>枝豆コーンサラダ</li><li>シリアル</li><li>漬物・海苔・納豆</li><li>汁物・牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-lunch">
+        <div class="menu-card__header">
+          <span class="menu-badge">昼</span>
+          <span class="menu-summary">中華和え</span>
+        </div>
+        <ul class="menu-detail"><li>豚とキャベツの中華和え</li><li>フルーチェ ミックスオレンジ</li><li>ご飯・汁物</li><li>牛乳</li></ul>
+      </article>
+    
+
+      <article class="menu-card meal-dinner">
+        <div class="menu-card__header">
+          <span class="menu-badge">夜</span>
+          <span class="menu-summary">チャプチェ</span>
+        </div>
+        <ul class="menu-detail"><li>(A) チャプチェ</li><li>きゅうりの和風ピクルス</li><li>ご飯</li><li>汁物</li></ul>
+      </article>
+    
+                  </div>
+                </section>
+                
+    <div class="footer">GitHub Pages 向けの静的ページです。</div>
+  </main>
+</body>
+</html>

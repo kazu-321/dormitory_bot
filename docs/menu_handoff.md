@@ -74,6 +74,14 @@ The `--text` argument is still accepted as input, but the stored form is structu
 - The store keeps only today and future dates.
 - Old entries are pruned automatically when menus are saved.
 - If old data still exists, loading the store migrates it to the current structure.
+- Saving a menu also regenerates the static website under `website/`.
+
+## Website Output
+
+- Root page: `website/index.html`
+- Menu list page: `website/menu/index.html`
+- The pages are static and GitHub Pages compatible.
+- The menu page is regenerated automatically whenever `data/menu.json` is saved.
 
 ## Notification Behavior
 

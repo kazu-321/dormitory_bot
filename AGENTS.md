@@ -19,6 +19,7 @@ If you are about to touch menu behavior, read [docs/menu_handoff.md](/home/kazu/
 - This project stores dormitory menu data locally and sends Discord DM notifications.
 - In this project, "notification" means a DM to a Discord `user_id`.
 - Menu state lives in `data/menu.json`.
+- Static website output lives under `website/`.
 - User notification preferences live in `data/user_data.json`.
 - Scheduled behavior is cron-driven; the scripts in `scripts/` are what cron calls.
 
@@ -31,6 +32,8 @@ If you are about to touch menu behavior, read [docs/menu_handoff.md](/home/kazu/
 - Keep `menu_summary` short and stable.
 - Prune past menu entries automatically when saving.
 - Keep menu dates and pruning logic JST-based.
+- Regenerate `website/index.html` and `website/menu/index.html` whenever the menu store is saved.
+- Keep the generated site GitHub Pages compatible.
 
 ## Notification Rules
 
@@ -45,6 +48,7 @@ If you are about to touch menu behavior, read [docs/menu_handoff.md](/home/kazu/
 - [README.md](/home/kazu/dormitory/README.md): short human-facing overview.
 - [docs/menu_handoff.md](/home/kazu/dormitory/docs/menu_handoff.md): full menu schema and workflow.
 - `dormitory_bot/store.py`: menu storage, migration, parsing, summary helpers.
+- `dormitory_bot/menu_site.py`: static site generation for GitHub Pages.
 - `dormitory_bot/ingest.py`: add or correct menu entries.
 - `dormitory_bot/menu_notify.py`: build and send menu notifications.
 
