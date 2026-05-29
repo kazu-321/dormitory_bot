@@ -75,6 +75,7 @@ The `--text` argument is still accepted as input, but the stored form is structu
 - The store keeps historical entries unless you explicitly delete them.
 - If old data still exists, loading the store migrates it to the current structure.
 - Saving a menu regenerates the static website at the repository root.
+- When a future chat provides an attached image or PDF to add, parse it and upsert the structured result into `data/menu.json` without duplicate `date` + `meal` entries. See [docs/ingest_handoff.md](/home/kazu/dormitory/docs/ingest_handoff.md).
 
 ## Website Output
 

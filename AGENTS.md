@@ -3,6 +3,7 @@
 This is the primary Codex operating document for this repository.
 
 If you are about to touch menu behavior, read [docs/menu_handoff.md](/home/kazu/dormitory/docs/menu_handoff.md) immediately after this file.
+If you are about to touch attachment ingestion or user registry updates, also read [docs/ingest_handoff.md](/home/kazu/dormitory/docs/ingest_handoff.md).
 
 ## Operating Principles
 
@@ -21,6 +22,8 @@ If you are about to touch menu behavior, read [docs/menu_handoff.md](/home/kazu/
 - Menu state lives in `data/menu.json`.
 - Static website output lives at the repository root (`index.html`, `calendar.html`, and `menu/index.html`).
 - User notification preferences live in `data/user_data.json`.
+- Attachment-driven menu imports should be parsed into `data/menu.json` without duplicate `date` + `meal` entries.
+- Discord user additions should be saved into `data/user_data.json` without duplicate `user_id` entries.
 - Scheduled behavior is cron-driven; the scripts in `scripts/` are what cron calls.
 
 ## Menu Rules
@@ -48,20 +51,23 @@ If you are about to touch menu behavior, read [docs/menu_handoff.md](/home/kazu/
 
 - [README.md](/home/kazu/dormitory/README.md): short human-facing overview.
 - [docs/menu_handoff.md](/home/kazu/dormitory/docs/menu_handoff.md): full menu schema and workflow.
+- [docs/ingest_handoff.md](/home/kazu/dormitory/docs/ingest_handoff.md): attachment parsing and user registry workflow.
 - `dormitory_bot/store.py`: menu storage, migration, parsing, summary helpers.
 - `dormitory_bot/menu_site.py`: static site generation for GitHub Pages.
 - `dormitory_bot/ingest.py`: add or correct menu entries.
 - `dormitory_bot/menu_notify.py`: build and send menu notifications.
+- `dormitory_bot/user_data.py`: save Discord user records and notification subscriptions.
 
 ## Change Workflow
 
 1. Read this file.
 2. Read [docs/menu_handoff.md](/home/kazu/dormitory/docs/menu_handoff.md) if the task touches menus.
-3. Inspect the current code before editing.
-4. Edit the smallest set of files needed.
-5. Run syntax checks or dry-runs.
-6. Send a test notification to test users for menu-related changes.
-7. Summarize what changed and what was verified.
+3. Read [docs/ingest_handoff.md](/home/kazu/dormitory/docs/ingest_handoff.md) if the task touches attachments or user records.
+4. Inspect the current code before editing.
+5. Edit the smallest set of files needed.
+6. Run syntax checks or dry-runs.
+7. Send a test notification to test users for menu-related changes.
+8. Summarize what changed and what was verified.
 
 ## Menu Additions
 
