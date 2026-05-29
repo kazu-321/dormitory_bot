@@ -16,7 +16,7 @@
 - メニュー追加: `python3 -m dormitory_bot.ingest`
 - メニュー通知: `python3 -m dormitory_bot.menu_notify`
 - 掃除通知: `python3 -m dormitory_bot.cleaning_notify`
-- 公開用のメニュー一覧: `website/menu/index.html`
+- 公開用のメニュー一覧: `menu/index.html`
 
 ## メモ
 

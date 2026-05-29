@@ -10,7 +10,7 @@ from .config import BASE_DIR, JST, MEAL_LABELS_JA, DEFAULT_STORE_PATH
 from .store import load_store, menu_to_lines, normalize_entry, summarize_menu
 
 
-DEFAULT_WEBSITE_DIR = BASE_DIR / "website"
+DEFAULT_WEBSITE_DIR = BASE_DIR
 
 
 def _date_label(entry_date: str) -> str:
@@ -317,4 +317,3 @@ def write_menu_site(store_path: Path = DEFAULT_STORE_PATH, website_dir: Path = D
     menu_html = _build_menu_page(entries)
     (menu_dir / "index.html").write_text(menu_html, encoding="utf-8")
     (website_dir / "index.html").write_text(_build_root_page(), encoding="utf-8")
-
