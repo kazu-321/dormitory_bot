@@ -20,10 +20,35 @@ Each entry has:
 - `meal`: `breakfast`, `lunch`, or `dinner`
 - `menu`: structured menu data
 - `menu_summary`: compact label used in short listings
+- `nutrition`: optional structured nutrition data shown on the website only when present
 - `image_path`: optional reference to the source image
 - `extracted_at`: timestamp when the entry was saved
 
 `source` is no longer stored.
+
+### Nutrition
+
+Nutrition is optional. When a source includes nutrition values, store them as a dictionary on the entry:
+
+```json
+{
+  "energy_kcal": 650,
+  "protein_g": 24.1,
+  "fat_g": 18.2,
+  "carbohydrate_g": 92.4,
+  "salt_g": 2.8
+}
+```
+
+The static site recognizes these common keys and adds units automatically:
+
+- `energy_kcal`, `calories_kcal`, `kcal`
+- `protein_g`
+- `fat_g`
+- `carbohydrate_g`, `carbs_g`
+- `salt_g`, `sodium_g`
+
+Other keys are preserved and displayed with `_` changed to spaces. Nutrition should stay out of notification text unless a future request explicitly changes notification behavior.
 
 ### Breakfast / Lunch
 
@@ -79,6 +104,7 @@ If a future chat hands you an image or PDF and asks to add it, do the parsing an
 - The pages are static and GitHub Pages compatible.
 - The menu list page shows current/future entries.
 - The calendar page shows the full history and lets you pick a date to inspect.
+- Nutrition panels are hidden by default and appear as a `栄養を見る` control only when an entry has `nutrition`.
 - The pages are regenerated automatically whenever `data/menu.json` is saved.
 - The generated website uses the browser's current JST date for "today"; do not add a manual base-date selector unless the user explicitly asks for one.
 

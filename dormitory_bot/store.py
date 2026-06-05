@@ -16,6 +16,7 @@ class MenuEntry:
     meal: str
     menu: dict[str, Any]
     menu_summary: str | None = None
+    nutrition: dict[str, Any] | None = None
     image_path: str | None = None
     extracted_at: str | None = None
 
@@ -27,6 +28,8 @@ class MenuEntry:
         }
         if self.menu_summary is not None:
             data["menu_summary"] = self.menu_summary
+        if self.nutrition is not None:
+            data["nutrition"] = self.nutrition
         if self.image_path is not None:
             data["image_path"] = self.image_path
         if self.extracted_at is not None:
@@ -141,6 +144,25 @@ def _get_menu_value(menu: dict[str, Any] | None, key: str) -> str:
         return ""
     value = menu.get(key, "")
     return _clean_piece(str(value)) if value is not None else ""
+
+
+def normalize_nutrition(value: Any) -> dict[str, Any] | None:
+    if not isinstance(value, dict):
+        return None
+
+    normalized: dict[str, Any] = {}
+    for key, item in value.items():
+        clean_key = str(key).strip()
+        if not clean_key:
+            continue
+        if isinstance(item, str):
+            clean_item = _clean_piece(item)
+            if clean_item:
+                normalized[clean_key] = clean_item
+        elif item is not None:
+            normalized[clean_key] = item
+
+    return normalized or None
 
 
 def summarize_menu_name(text: str) -> str:
@@ -261,6 +283,9 @@ def normalize_entry(entry: dict[str, Any]) -> dict[str, Any]:
         menu_summary = summarize_menu(meal, menu)
     if menu_summary:
         normalized["menu_summary"] = menu_summary
+    nutrition = normalize_nutrition(entry.get("nutrition"))
+    if nutrition:
+        normalized["nutrition"] = nutrition
     image_path = entry.get("image_path")
     if image_path:
         normalized["image_path"] = image_path

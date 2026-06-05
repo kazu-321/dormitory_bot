@@ -8,7 +8,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 from .config import BASE_DIR, JST, MEAL_LABELS_JA, DEFAULT_STORE_PATH
-from .store import load_store, menu_to_lines, normalize_entry, summarize_menu
+from .store import load_store, menu_to_lines, normalize_entry, normalize_nutrition, summarize_menu
 
 
 DEFAULT_WEBSITE_DIR = BASE_DIR
@@ -39,6 +39,91 @@ def _escape(text: str) -> str:
 
 def _json_script_data(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False).replace("</", "<\\/")
+
+
+NUTRITION_LABELS = {
+    "energy_kcal": "エネルギー",
+    "calories_kcal": "エネルギー",
+    "kcal": "エネルギー",
+    "protein_g": "たんぱく質",
+    "fat_g": "脂質",
+    "carbohydrate_g": "炭水化物",
+    "carbs_g": "炭水化物",
+    "salt_g": "食塩相当量",
+    "sodium_g": "食塩相当量",
+}
+
+NUTRITION_UNITS = {
+    "energy_kcal": "kcal",
+    "calories_kcal": "kcal",
+    "kcal": "kcal",
+    "protein_g": "g",
+    "fat_g": "g",
+    "carbohydrate_g": "g",
+    "carbs_g": "g",
+    "salt_g": "g",
+    "sodium_g": "g",
+}
+
+NUTRITION_ORDER = (
+    "energy_kcal",
+    "calories_kcal",
+    "kcal",
+    "protein_g",
+    "fat_g",
+    "carbohydrate_g",
+    "carbs_g",
+    "salt_g",
+    "sodium_g",
+)
+
+
+def _nutrition_label(key: str) -> str:
+    return NUTRITION_LABELS.get(key, key.replace("_", " "))
+
+
+def _nutrition_value(key: str, value: Any) -> str:
+    if isinstance(value, float):
+        text = f"{value:g}"
+    else:
+        text = str(value).strip()
+    unit = NUTRITION_UNITS.get(key)
+    if unit and text and not text.lower().endswith(unit.lower()):
+        return f"{text}{unit}"
+    return text
+
+
+def _nutrition_items(nutrition: dict[str, Any] | None) -> list[tuple[str, str]]:
+    normalized = normalize_nutrition(nutrition)
+    if not normalized:
+        return []
+
+    ordered_keys = [key for key in NUTRITION_ORDER if key in normalized]
+    ordered_keys.extend(key for key in normalized if key not in ordered_keys)
+
+    items: list[tuple[str, str]] = []
+    for key in ordered_keys:
+        value = _nutrition_value(key, normalized[key])
+        if value:
+            items.append((_nutrition_label(key), value))
+    return items
+
+
+def _render_nutrition_panel(nutrition: dict[str, Any] | None) -> str:
+    items = _nutrition_items(nutrition)
+    if not items:
+        return ""
+
+    rows = "".join(
+        f"<div class=\"nutrition-item\"><dt>{_escape(label)}</dt><dd>{_escape(value)}</dd></div>"
+        for label, value in items
+    )
+    return f"""
+        <details class="nutrition-panel">
+          <summary>栄養を見る</summary>
+          <dl class="nutrition-list">{rows}</dl>
+        </details>
+    """
 
 
 def _date_adjustment_js() -> str:
@@ -78,6 +163,7 @@ def _render_menu_card(entry: dict[str, Any]) -> str:
     lines = menu_to_lines(meal, menu)
     detail_items = "".join(f"<li>{_escape(line)}</li>" for line in lines)
     detail_html = f"<ul class=\"menu-detail\">{detail_items}</ul>" if detail_items else ""
+    nutrition_html = _render_nutrition_panel(entry.get("nutrition"))
 
     badge_class = f"meal-{meal}" if meal in ("breakfast", "lunch", "dinner") else "meal-generic"
 
@@ -88,6 +174,7 @@ def _render_menu_card(entry: dict[str, Any]) -> str:
           <span class="menu-summary">{_escape(summary)}</span>
         </div>
         {detail_html}
+        {nutrition_html}
       </article>
     """
 
@@ -281,6 +368,56 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
     .menu-detail li + li {
       margin-top: 4px;
     }
+    .nutrition-panel {
+      margin-top: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+    .nutrition-panel summary {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel-strong);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 800;
+      list-style: none;
+    }
+    .nutrition-panel summary::-webkit-details-marker {
+      display: none;
+    }
+    .nutrition-panel summary::after {
+      content: "＋";
+      margin-left: 8px;
+      color: var(--muted);
+    }
+    .nutrition-panel[open] summary::after {
+      content: "－";
+    }
+    .nutrition-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0 0;
+    }
+    .nutrition-item {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.66);
+    }
+    .nutrition-item dt {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .nutrition-item dd {
+      margin: 3px 0 0;
+      font-weight: 800;
+    }
     .empty-state {
       margin-top: 24px;
       padding: 24px;
@@ -320,6 +457,39 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
     const DATA = JSON.parse(document.getElementById("menu-data").textContent);
     const ENTRIES = DATA.entries || [];
     const MEAL_ORDER = {"breakfast": 0, "lunch": 1, "dinner": 2};
+    const NUTRITION_LABELS = {
+      energy_kcal: "エネルギー",
+      calories_kcal: "エネルギー",
+      kcal: "エネルギー",
+      protein_g: "たんぱく質",
+      fat_g: "脂質",
+      carbohydrate_g: "炭水化物",
+      carbs_g: "炭水化物",
+      salt_g: "食塩相当量",
+      sodium_g: "食塩相当量",
+    };
+    const NUTRITION_UNITS = {
+      energy_kcal: "kcal",
+      calories_kcal: "kcal",
+      kcal: "kcal",
+      protein_g: "g",
+      fat_g: "g",
+      carbohydrate_g: "g",
+      carbs_g: "g",
+      salt_g: "g",
+      sodium_g: "g",
+    };
+    const NUTRITION_ORDER = [
+      "energy_kcal",
+      "calories_kcal",
+      "kcal",
+      "protein_g",
+      "fat_g",
+      "carbohydrate_g",
+      "carbs_g",
+      "salt_g",
+      "sodium_g",
+    ];
     const results = document.getElementById("menu-results");
 """,
             _date_adjustment_js(),
@@ -391,6 +561,43 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
       return [];
     }
 
+    function nutritionItems(entry) {
+      const nutrition = entry.nutrition;
+      if (!nutrition || typeof nutrition !== "object" || Array.isArray(nutrition)) return [];
+      const keys = [
+        ...NUTRITION_ORDER.filter((key) => Object.prototype.hasOwnProperty.call(nutrition, key)),
+        ...Object.keys(nutrition).filter((key) => !NUTRITION_ORDER.includes(key)),
+      ];
+      return keys.flatMap((key) => {
+        const rawValue = nutrition[key];
+        if (rawValue === null || rawValue === undefined) return [];
+        const text = String(rawValue).trim();
+        if (!text) return [];
+        const unit = NUTRITION_UNITS[key] || "";
+        const value = unit && !text.toLowerCase().endsWith(unit.toLowerCase()) ? `${text}${unit}` : text;
+        const label = NUTRITION_LABELS[key] || key.replaceAll("_", " ");
+        return [[label, value]];
+      });
+    }
+
+    function renderNutritionPanel(entry) {
+      const items = nutritionItems(entry);
+      if (!items.length) return "";
+      return `
+        <details class="nutrition-panel">
+          <summary>栄養を見る</summary>
+          <dl class="nutrition-list">
+            ${items.map(([label, value]) => `
+              <div class="nutrition-item">
+                <dt>${escapeHtml(label)}</dt>
+                <dd>${escapeHtml(value)}</dd>
+              </div>
+            `).join("")}
+          </dl>
+        </details>
+      `;
+    }
+
     function renderCard(entry) {
       const lines = menuLines(entry);
       const meal = String(entry.meal || "");
@@ -405,6 +612,7 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
             <span class="menu-summary">${escapeHtml(summary)}</span>
           </div>
           ${detailHtml}
+          ${renderNutritionPanel(entry)}
         </article>
       `;
     }
@@ -764,6 +972,56 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
     }
     .menu-detail li + li {
       margin-top: 4px;
+    }
+    .nutrition-panel {
+      margin-top: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+    .nutrition-panel summary {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel-strong);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 800;
+      list-style: none;
+    }
+    .nutrition-panel summary::-webkit-details-marker {
+      display: none;
+    }
+    .nutrition-panel summary::after {
+      content: "＋";
+      margin-left: 8px;
+      color: var(--muted);
+    }
+    .nutrition-panel[open] summary::after {
+      content: "－";
+    }
+    .nutrition-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0 0;
+    }
+    .nutrition-item {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.66);
+    }
+    .nutrition-item dt {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .nutrition-item dd {
+      margin: 3px 0 0;
+      font-weight: 800;
     }
     .empty-state {
       margin-top: 10px;
