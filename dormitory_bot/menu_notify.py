@@ -105,6 +105,10 @@ def _meal_detail_title(meal: str) -> str:
 def _contains_coffee_milk(entry: dict | None) -> bool:
     if not entry:
         return False
+    meal = str(entry.get("meal", ""))
+    menu = entry.get("menu")
+    if isinstance(menu, dict) and any("コーヒー牛乳" in line for line in menu_to_lines(meal, menu)):
+        return True
     return "コーヒー牛乳" in str(entry.get("text", ""))
 
 

@@ -3675,6 +3675,364 @@
         "kind": "dinner"
       },
       "menu_summary": "ビックメンチカツ"
+    },
+    {
+      "date": "2026-06-22",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "野菜たっぷり卵焼き",
+          "ハム",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "野菜たっぷり卵焼き"
+    },
+    {
+      "date": "2026-06-22",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "冷やしジャージャー麺",
+          "ポテトの磯辺揚げ",
+          "クレープ",
+          "ご飯",
+          "カップヨーグルト"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "冷やしジャージャー麺"
+    },
+    {
+      "date": "2026-06-22",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "肉団子のデミトマ煮",
+        "b": "ポークソテー おろしソース",
+        "common": [
+          "にらともやしの辛子醤油",
+          "ジョア",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "肉団子 / ポークソテー おろしソース"
+    },
+    {
+      "date": "2026-06-23",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "メンチカツ",
+          "小松菜とひじきのお浸し",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "メンチカツ"
+    },
+    {
+      "date": "2026-06-23",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "チャーハンWITH豚の生姜焼き",
+          "オクラとコーンのわさび醤油マリネ",
+          "蒟蒻ピーチゼリー",
+          "汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "生姜焼き"
+    },
+    {
+      "date": "2026-06-23",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "インド風タンドリーチキン",
+        "b": "牛肉の五目炊き合わせ",
+        "common": [
+          "緑黄色野菜のおかか和え",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "インド風タンドリーチキン / 五目炊き合わせ"
+    },
+    {
+      "date": "2026-06-24",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "プレーンオムレツ",
+          "五目豆",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "オムレツ"
+    },
+    {
+      "date": "2026-06-24",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "冷やし肉味噌茄子うどん",
+          "白身魚フライ",
+          "フルーチェ ぶどう",
+          "ご飯",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "うどん"
+    },
+    {
+      "date": "2026-06-24",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "油淋鶏",
+        "b": "豚肉ときのこのポン酢炒め",
+        "common": [
+          "こんにゃくと野菜の煮物",
+          "ヤクルト",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "油淋鶏 / ポン酢炒め"
+    },
+    {
+      "date": "2026-06-25",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "そぼろ肉じゃが",
+          "ウインナーと野菜のソテー",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "そぼろ肉じゃが"
+    },
+    {
+      "date": "2026-06-25",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "鶏の照り焼き",
+          "キャベツのゆず和え",
+          "グレープフルーツゼリー",
+          "ご飯・汁物",
+          "コーヒー牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "照り焼き"
+    },
+    {
+      "date": "2026-06-25",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "アジの竜田揚げ 香味ソース",
+        "b": "豚肉と野菜のしゃぶしゃぶ風",
+        "common": [
+          "白菜と人参のピリ辛和え",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "竜田揚げ 香味ソース / しゃぶしゃぶ風"
+    },
+    {
+      "date": "2026-06-26",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "豚野菜炒め",
+          "肉団子のクリーム煮",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "豚野菜炒め"
+    },
+    {
+      "date": "2026-06-26",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "カレーライス（豚）",
+          "レンコーンサラダ",
+          "フルーツヨーグルト",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "カレーライス"
+    },
+    {
+      "date": "2026-06-26",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "鶏肉の生姜焼き",
+        "b": "目玉焼きフライとデミグラスコロッケ",
+        "common": [
+          "豆腐とニラのチャンプルー",
+          "ジュース",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "生姜焼き / コロッケ"
+    },
+    {
+      "date": "2026-06-27",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "五目巾着の煮物",
+          "ブロッコリーの青煮",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "煮物"
+    },
+    {
+      "date": "2026-06-27",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "むね肉の香り揚げ海苔風味あんかけ",
+          "ﾎﾟﾃﾄとｱﾎﾞｶﾄﾞの辛子マヨネーズ和え",
+          "フルーチェ イチゴ",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "香り揚げ海苔風味あんかけ"
+    },
+    {
+      "date": "2026-06-27",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "豆腐ハンバーグと焼きコロッケ",
+        "b": "",
+        "common": [
+          "青梗菜の煮浸し",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "ハンバーグ"
+    },
+    {
+      "date": "2026-06-28",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "ホウレン草のスクランブルエッグ",
+          "ツナキャベツ",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "スクランブルエッグ"
+    },
+    {
+      "date": "2026-06-28",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "ヤンニョムチキン",
+          "茄子の生姜醤油",
+          "パイン寒天ゼリー",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "ヤンニョムチキン"
+    },
+    {
+      "date": "2026-06-28",
+      "extracted_at": "2026-06-19T12:32:29+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.22週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "メンチカツレツ粒マスタードソース",
+        "b": "",
+        "common": [
+          "きんぴらごぼう",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "メンチカツレツ粒マスタードソース"
     }
   ],
   "version": 2
