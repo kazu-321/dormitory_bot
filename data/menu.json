@@ -4033,6 +4033,364 @@
         "kind": "dinner"
       },
       "menu_summary": "メンチカツレツ粒マスタードソース"
+    },
+    {
+      "date": "2026-06-29",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "ピーマン肉詰めフライ",
+          "大根とベーコンの洋風きんぴら",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "フライ"
+    },
+    {
+      "date": "2026-06-29",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "とんこつ醤油らーめん",
+          "野菜コロッケ",
+          "プチシュー",
+          "ご飯",
+          "カップヨーグルト"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "とんこつ醤油らーめん"
+    },
+    {
+      "date": "2026-06-29",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "鶏もものレモンペッパーグリル",
+        "b": "夏野菜の四川風炒め",
+        "common": [
+          "海藻とオニオンのマリネサラダ",
+          "ジョア",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "レモンペッパーグリル / 四川風炒め"
+    },
+    {
+      "date": "2026-06-30",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "水餃子",
+          "白菜とチャーシューの炒め",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "餃子"
+    },
+    {
+      "date": "2026-06-30",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "トマトおろしの夏越牛丼",
+          "揚げだし豆腐",
+          "みかん寒天ゼリー",
+          "汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "夏越牛丼"
+    },
+    {
+      "date": "2026-06-30",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "豚ロースのとんてき風",
+        "b": "チキンストロガノフ",
+        "common": [
+          "いんげんの和風マスタード和え",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "とんてき風 / チキンストロガノフ"
+    },
+    {
+      "date": "2026-07-01",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "トマトスクランブルエッグ",
+          "和風スパゲッティー",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "スクランブルエッグ"
+    },
+    {
+      "date": "2026-07-01",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "（冷）竹輪天うどん",
+          "ごぼうのポテトサラダ",
+          "みたらし白玉",
+          "ご飯",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "うどん"
+    },
+    {
+      "date": "2026-07-01",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "チキンピカタ トマトソース",
+        "b": "肉みそキャベツ",
+        "common": [
+          "春雨の中華和え物",
+          "ヤクルト",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "チキンピカタ トマトソース / 肉みそキャベツ"
+    },
+    {
+      "date": "2026-07-02",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "和風マーボ豆腐",
+          "ほうれん草と白滝のお浸し",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "和風マーボ豆腐"
+    },
+    {
+      "date": "2026-07-02",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "牛肉のオイスターソース炒め",
+          "枝豆コーンソテー",
+          "蒟蒻ぶどうゼリー",
+          "ご飯・汁物",
+          "コーヒー牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "オイスターソース炒め"
+    },
+    {
+      "date": "2026-07-02",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "和風ハンバーグの 玉長葱塩ソース",
+        "b": "卵と野菜のビーフン炒め",
+        "common": [
+          "切干大根の炒め煮",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "ハンバーグ / ビーフン炒め"
+    },
+    {
+      "date": "2026-07-03",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "肉団子のチリソース",
+          "おくらのわさび醤油",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "肉団子"
+    },
+    {
+      "date": "2026-07-03",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "キーマカレー",
+          "わかめサラダ",
+          "コーヒーゼリー",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "カレー"
+    },
+    {
+      "date": "2026-07-03",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "メンチカツ＆コーンフライ",
+        "b": "肉じゃが",
+        "common": [
+          "小松菜とコーンの煮浸し",
+          "ジュース",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "フライ / 肉じゃが"
+    },
+    {
+      "date": "2026-07-04",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "竹輪磯辺天",
+          "炒り豆腐",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "竹輪磯辺天"
+    },
+    {
+      "date": "2026-07-04",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "麻婆茄子",
+          "人参とニラのナムル",
+          "黒糖ゼリー",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "麻婆茄子"
+    },
+    {
+      "date": "2026-07-04",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "揚げ餃子の南蛮ソース",
+        "b": "",
+        "common": [
+          "豚とシメジの炒め煮",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "餃子"
+    },
+    {
+      "date": "2026-07-05",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "Ｓ小鉢）ニラ玉炒め",
+          "ツナとブロッコリーのマカロニサラダ",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "Ｓ小鉢）ニラ玉炒め"
+    },
+    {
+      "date": "2026-07-05",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "ポークソテー粗挽きジンジャーソース",
+          "ピーマンのマリネ",
+          "フルーチェ ミックスオレンジ",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "ポークソテー粗挽きジンジャーソース"
+    },
+    {
+      "date": "2026-07-05",
+      "extracted_at": "2026-06-26T12:17:41+09:00",
+      "image_path": "/home/kazu/ダウンロード/6.29週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "豚野菜巻きフライと 玉子サラダフライ",
+        "b": "",
+        "common": [
+          "カリフラワーのコンソメ煮",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "フライ"
     }
   ],
   "version": 2
