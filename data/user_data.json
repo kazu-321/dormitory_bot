@@ -45,6 +45,17 @@
       "test_user": false,
       "updated_at": "2026-05-29T18:32:52.000000+09:00",
       "user_id": "1225359761076260875"
+    },
+    {
+      "aliases": [],
+      "description": "いとう",
+      "notifications": [
+        "menu"
+      ],
+      "source": "manual",
+      "test_user": false,
+      "updated_at": "2026-07-18T12:01:53.708337+09:00",
+      "user_id": "1348218299296649233"
     }
   ],
   "version": 1
