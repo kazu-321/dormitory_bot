@@ -5106,6 +5106,361 @@
         "kind": "dinner"
       },
       "menu_summary": "こハヤシソース"
+    },
+    {
+      "date": "2026-07-20",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "プレーンオムレツ",
+          "ハムと野菜のカレー炒め",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "オムレツ"
+    },
+    {
+      "date": "2026-07-20",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "ポテトコロッケとチキンカツ",
+          "ブロッコリーのマスタードマヨ和え",
+          "黒糖ゼリー",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "チキンカツ"
+    },
+    {
+      "date": "2026-07-20",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "豚肉と野菜のオイスターソース炒め",
+        "b": "",
+        "common": [
+          "塩コーンポテト",
+          "ジョア",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "オイスターソース炒め"
+    },
+    {
+      "date": "2026-07-21",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "メンチカツ",
+          "ひじきと枝豆の煮物",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "メンチカツ"
+    },
+    {
+      "date": "2026-07-21",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "豚肉の細切り飯",
+          "春巻",
+          "プチシュー",
+          "汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "細切り飯"
+    },
+    {
+      "date": "2026-07-21",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "鶏もも肉のこがし味噌焼き",
+        "b": "いわしと竹輪の蒲焼仕立て",
+        "common": [
+          "もやしときくらげの中華和え",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "こがし味噌焼き / 蒲焼仕立て"
+    },
+    {
+      "date": "2026-07-22",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "野菜たっぷり卵焼き",
+          "青梗菜とえのきのお浸し",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "野菜たっぷり卵焼き"
+    },
+    {
+      "date": "2026-07-22",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "冷やし焼肉うどん",
+          "あんかけ豆腐",
+          "フルーチェ ぶどう",
+          "ご飯",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "うどん"
+    },
+    {
+      "date": "2026-07-22",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "【勝ち飯】鶏むね肉のチーズグリル シャリアピンソースセット",
+        "b": "",
+        "common": [
+          "ヤクルト"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "シャリアピンソースセット"
+    },
+    {
+      "date": "2026-07-23",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "そぼろ肉じゃが",
+          "春雨サラダ",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "そぼろ肉じゃが"
+    },
+    {
+      "date": "2026-07-23",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "味噌とんかつ",
+          "蒸し鶏と胡瓜の梅和え",
+          "グレープフルーツゼリー",
+          "ご飯・汁物",
+          "コーヒー牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "味噌とんかつ"
+    },
+    {
+      "date": "2026-07-23",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "ハンバーグ ジンジャーソース",
+        "b": "豚焼肉ともやしの油淋ソース",
+        "common": [
+          "ケチャップスパゲッティー",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "ハンバーグ / 焼肉"
+    },
+    {
+      "date": "2026-07-24",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "豚野菜炒め",
+          "和風マカロニサラダ",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "豚野菜炒め"
+    },
+    {
+      "date": "2026-07-24",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "カレーライス",
+          "カラフルサラダ",
+          "フルーツヨーグルト",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "カレーライス"
+    },
+    {
+      "date": "2026-07-24",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "グリルチキン ベーコンオニオンソース",
+        "b": "麻婆春雨",
+        "common": [
+          "ブロッコリーのカレーマヨ和え",
+          "ジュース",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "ベーコンオニオンソース / 麻婆春雨"
+    },
+    {
+      "date": "2026-07-25",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "かぼちゃのコロッケ",
+          "ソーセージとキャベツのフレンチサラダ",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "コロッケ"
+    },
+    {
+      "date": "2026-07-25",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "豚と根菜の甘辛きんぴら",
+          "ポテトの磯辺揚げ",
+          "フルーチェ イチゴ",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "甘辛きんぴら"
+    },
+    {
+      "date": "2026-07-25",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "BBQチキン",
+        "b": "",
+        "common": [
+          "白菜とハムの炒め",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "BBQチキン"
+    },
+    {
+      "date": "2026-07-26",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "ホウレン草のスクランブルエッグ",
+          "キャベツと筍の炒め煮",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "スクランブルエッグ"
+    },
+    {
+      "date": "2026-07-26",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "鶏肉のマスタードソース＆野菜コロッケ",
+          "揚げ茄子のオリーブ和え",
+          "パイン寒天ゼリー",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "コロッケ"
+    },
+    {
+      "date": "2026-07-26",
+      "extracted_at": "2026-07-18T12:05:24+09:00",
+      "image_path": "/home/kazu/ダウンロード/7.20週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "プルコギポーク",
+        "b": "",
+        "common": [
+          "餃子",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "プルコギポーク"
     }
   ],
   "version": 2

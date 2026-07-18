@@ -2,7 +2,7 @@
   "users": [
     {
       "aliases": [],
-      "description": "あなた。現在このプロジェクトを使っているユーザー。",
+      "description": "あなた",
       "notifications": [
         "menu",
         "cleaning",
@@ -10,29 +10,29 @@
       ],
       "source": "manual",
       "test_user": true,
-      "updated_at": "2026-05-29T12:52:06.648896+09:00",
+      "updated_at": "2026-07-18T12:05:24+09:00",
       "user_id": "847100254272094268"
     },
     {
       "aliases": [],
-      "description": "秋山さん。新規ユーザー。",
+      "description": "秋山",
       "notifications": [
         "menu"
       ],
       "source": "manual",
       "test_user": false,
-      "updated_at": "2026-05-29T12:52:06.650462+09:00",
+      "updated_at": "2026-07-18T12:05:24+09:00",
       "user_id": "1230405124204138579"
     },
     {
       "aliases": [],
-      "description": "竹内さん",
+      "description": "竹内",
       "notifications": [
         "menu"
       ],
       "source": "manual",
       "test_user": false,
-      "updated_at": "2026-05-29T18:22:10.037662+09:00",
+      "updated_at": "2026-07-18T12:05:24+09:00",
       "user_id": "1227238276998365255"
     },
     {
