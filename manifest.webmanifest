@@ -1,0 +1,28 @@
+{
+  "name": "Dormitory Menu",
+  "short_name": "Dormitory",
+  "description": "寮のメニューを見られる静的アプリ",
+  "id": "./menu/",
+  "start_url": "./menu/",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone"
+  ],
+  "background_color": "#f6f1e8",
+  "theme_color": "#f28c28",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

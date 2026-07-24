@@ -3,6 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+
+  <meta name="theme-color" content="#f28c28">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Dormitory">
+  <meta name="application-name" content="Dormitory">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="./icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
   <title>Dormitory Bot</title>
   <meta http-equiv="refresh" content="0; url=./menu/">
   <style>
@@ -23,5 +34,53 @@
 </head>
 <body>
   <p>メニュー一覧へ移動しています。<a href="./menu/">移動しない場合はこちら</a></p>
+
+  <script>
+    (() => {
+      if (!('serviceWorker' in navigator)) {
+        return;
+      }
+
+      const swUrl = new URL("./sw.js", window.location.href).href;
+      const hasController = Boolean(navigator.serviceWorker.controller);
+      let reloaded = false;
+
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register(swUrl).then((registration) => {
+          const triggerUpdate = () => {
+            if (registration.waiting) {
+              registration.waiting.postMessage({ type: "SKIP_WAITING" });
+            }
+          };
+
+          registration.update().catch(() => {});
+
+          if (registration.waiting) {
+            triggerUpdate();
+          }
+
+          registration.addEventListener("updatefound", () => {
+            const installingWorker = registration.installing;
+            if (!installingWorker) {
+              return;
+            }
+            installingWorker.addEventListener("statechange", () => {
+              if (installingWorker.state === "installed" && navigator.serviceWorker.controller) {
+                triggerUpdate();
+              }
+            });
+          });
+        }).catch(() => {});
+      });
+
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (!hasController || reloaded) {
+          return;
+        }
+        reloaded = true;
+        window.location.reload();
+      });
+    })();
+  </script>
 </body>
 </html>

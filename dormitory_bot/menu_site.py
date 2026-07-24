@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import html
 from datetime import datetime
@@ -39,6 +40,261 @@ def _escape(text: str) -> str:
 
 def _json_script_data(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False).replace("</", "<\\/")
+
+
+PWA_NAME = "Dormitory Menu"
+PWA_SHORT_NAME = "Dormitory"
+PWA_DESCRIPTION = "寮のメニューを見られる静的アプリ"
+PWA_THEME_COLOR = "#f28c28"
+PWA_BACKGROUND_COLOR = "#f6f1e8"
+PWA_START_URL = "./menu/"
+PWA_SCOPE = "./"
+PWA_CACHE_PREFIX = "dormitory-menu"
+
+
+def _site_build_id(entries: list[dict[str, Any]]) -> str:
+    payload = json.dumps(entries, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:12]
+
+
+def _pwa_head_tags(asset_prefix: str) -> str:
+    return f"""
+  <meta name="theme-color" content="{PWA_THEME_COLOR}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="{_escape(PWA_SHORT_NAME)}">
+  <meta name="application-name" content="{_escape(PWA_SHORT_NAME)}">
+  <link rel="manifest" href="{asset_prefix}manifest.webmanifest">
+  <link rel="icon" href="{asset_prefix}icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="{asset_prefix}icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="{asset_prefix}icons/apple-touch-icon.png">
+"""
+
+
+def _pwa_registration_script(sw_path: str) -> str:
+    return f"""
+  <script>
+    (() => {{
+      if (!('serviceWorker' in navigator)) {{
+        return;
+      }}
+
+      const swUrl = new URL({json.dumps(sw_path)}, window.location.href).href;
+      const hasController = Boolean(navigator.serviceWorker.controller);
+      let reloaded = false;
+
+      window.addEventListener("load", () => {{
+        navigator.serviceWorker.register(swUrl).then((registration) => {{
+          const triggerUpdate = () => {{
+            if (registration.waiting) {{
+              registration.waiting.postMessage({{ type: "SKIP_WAITING" }});
+            }}
+          }};
+
+          registration.update().catch(() => {{}});
+
+          if (registration.waiting) {{
+            triggerUpdate();
+          }}
+
+          registration.addEventListener("updatefound", () => {{
+            const installingWorker = registration.installing;
+            if (!installingWorker) {{
+              return;
+            }}
+            installingWorker.addEventListener("statechange", () => {{
+              if (installingWorker.state === "installed" && navigator.serviceWorker.controller) {{
+                triggerUpdate();
+              }}
+            }});
+          }});
+        }}).catch(() => {{}});
+      }});
+
+      navigator.serviceWorker.addEventListener("controllerchange", () => {{
+        if (!hasController || reloaded) {{
+          return;
+        }}
+        reloaded = true;
+        window.location.reload();
+      }});
+    }})();
+  </script>
+"""
+
+
+def _manifest_data() -> dict[str, Any]:
+    return {
+        "name": PWA_NAME,
+        "short_name": PWA_SHORT_NAME,
+        "description": PWA_DESCRIPTION,
+        "id": PWA_START_URL,
+        "start_url": PWA_START_URL,
+        "scope": PWA_SCOPE,
+        "display": "standalone",
+        "display_override": ["standalone"],
+        "background_color": PWA_BACKGROUND_COLOR,
+        "theme_color": PWA_THEME_COLOR,
+        "icons": [
+            {
+                "src": "./icons/icon-192.png",
+                "sizes": "192x192",
+                "type": "image/png",
+                "purpose": "any",
+            },
+            {
+                "src": "./icons/icon-512.png",
+                "sizes": "512x512",
+                "type": "image/png",
+                "purpose": "any maskable",
+            },
+        ],
+    }
+
+
+def _offline_page() -> str:
+    return """<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f28c28">
+  <title>オフライン</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(242, 140, 40, 0.14), transparent 34%),
+        linear-gradient(180deg, #faf7f2 0%, #f6f1e8 100%);
+      color: #1f2937;
+    }
+    .card {
+      max-width: 520px;
+      margin: 24px;
+      padding: 28px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 48px rgba(31, 41, 55, 0.12);
+      border: 1px solid rgba(31, 41, 55, 0.12);
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 1.8rem;
+    }
+    p {
+      margin: 0;
+      line-height: 1.7;
+      color: #4b5563;
+    }
+    a {
+      color: #f28c28;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <section class="card">
+    <h1>オフラインです</h1>
+    <p>保存済みのページがあれば表示できます。通信が戻ったら再読み込みしてください。<a href="./menu/">メニュー一覧へ</a></p>
+  </section>
+</body>
+</html>
+"""
+
+
+def _service_worker_script(build_id: str) -> str:
+    cache_name = f"{PWA_CACHE_PREFIX}-{build_id}"
+    shell_paths = [
+        "./",
+        "./index.html",
+        "./menu/",
+        "./menu/index.html",
+        "./calendar.html",
+        "./offline.html",
+        "./manifest.webmanifest",
+        "./icons/icon.svg",
+        "./icons/icon-192.png",
+        "./icons/icon-512.png",
+        "./icons/apple-touch-icon.png",
+    ]
+    shell_json = json.dumps(shell_paths, ensure_ascii=False)
+    return f"""const CACHE_NAME = {json.dumps(cache_name)};
+const APP_SHELL = {shell_json};
+
+self.addEventListener("install", (event) => {{
+  event.waitUntil((async () => {{
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(APP_SHELL);
+    await self.skipWaiting();
+  }})());
+}});
+
+self.addEventListener("activate", (event) => {{
+  event.waitUntil((async () => {{
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)));
+    await self.clients.claim();
+  }})());
+}});
+
+self.addEventListener("message", (event) => {{
+  if (event.data && event.data.type === "SKIP_WAITING") {{
+    self.skipWaiting();
+  }}
+}});
+
+self.addEventListener("fetch", (event) => {{
+  const request = event.request;
+  if (request.method !== "GET") {{
+    return;
+  }}
+
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) {{
+    return;
+  }}
+
+  if (request.mode === "navigate") {{
+    event.respondWith((async () => {{
+      try {{
+        const networkResponse = await fetch(request);
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(request, networkResponse.clone());
+        return networkResponse;
+      }} catch {{
+        const cached = await caches.match(request, {{ ignoreSearch: true }});
+        if (cached) {{
+          return cached;
+        }}
+        return caches.match("./offline.html");
+      }}
+    }})());
+    return;
+  }}
+
+  event.respondWith((async () => {{
+    const cached = await caches.match(request);
+    if (cached) {{
+      return cached;
+    }}
+    try {{
+      const response = await fetch(request);
+      if (response && response.ok) {{
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(request, response.clone());
+      }}
+      return response;
+    }} catch {{
+      return caches.match("./offline.html");
+    }}
+  }})());
+}});
+"""
 
 
 NUTRITION_LABELS = {
@@ -226,7 +482,9 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>今後のメニュー</title>
+""",
+            _pwa_head_tags("../"),
+            """  <title>今後のメニュー</title>
   <style>
     :root {
       --bg: #f6f1e8;
@@ -652,9 +910,11 @@ def _build_menu_page(entries: list[dict[str, Any]]) -> str:
 
     render();
   </script>
-</body>
+""",
+            _pwa_registration_script("../sw.js"),
+            """</body>
 </html>
-        """
+"""
         ]
     )
 
@@ -684,7 +944,9 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>メニューカレンダー</title>
+""",
+            _pwa_head_tags("./"),
+            """  <title>メニューカレンダー</title>
   <style>
     :root {
       --bg: #f6f1e8;
@@ -1235,20 +1497,27 @@ def _build_calendar_page(entries: list[dict[str, Any]]) -> str:
 
     renderAll();
   </script>
-</body>
+""",
+            _pwa_registration_script("./sw.js"),
+            """</body>
 </html>
-        """
+"""
         ]
     )
 
 
 def _build_root_page() -> str:
-    return """<!doctype html>
+    return "".join(
+        [
+            """<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dormitory Bot</title>
+  <meta name="color-scheme" content="light">
+""",
+            _pwa_head_tags("./"),
+            """  <title>Dormitory Bot</title>
   <meta http-equiv="refresh" content="0; url=./menu/">
   <style>
     body {
@@ -1268,14 +1537,19 @@ def _build_root_page() -> str:
 </head>
 <body>
   <p>メニュー一覧へ移動しています。<a href="./menu/">移動しない場合はこちら</a></p>
-</body>
+""",
+            _pwa_registration_script("./sw.js"),
+            """</body>
 </html>
 """
+        ]
+    )
 
 
 def write_menu_site(store_path: Path = DEFAULT_STORE_PATH, website_dir: Path = DEFAULT_WEBSITE_DIR) -> None:
     data = load_store(store_path)
     entries = [normalize_entry(entry) for entry in data.get("entries", []) if isinstance(entry, dict)]
+    build_id = _site_build_id(entries)
 
     menu_dir = website_dir / "menu"
     menu_dir.mkdir(parents=True, exist_ok=True)
@@ -1285,3 +1559,9 @@ def write_menu_site(store_path: Path = DEFAULT_STORE_PATH, website_dir: Path = D
     (menu_dir / "index.html").write_text(menu_html, encoding="utf-8")
     (website_dir / "calendar.html").write_text(_build_calendar_page(entries), encoding="utf-8")
     (website_dir / "index.html").write_text(_build_root_page(), encoding="utf-8")
+    (website_dir / "manifest.webmanifest").write_text(
+        json.dumps(_manifest_data(), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    (website_dir / "sw.js").write_text(_service_worker_script(build_id), encoding="utf-8")
+    (website_dir / "offline.html").write_text(_offline_page(), encoding="utf-8")

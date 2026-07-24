@@ -101,11 +101,13 @@ If a future chat hands you an image or PDF and asks to add it, do the parsing an
 - Root page: `index.html`
 - Calendar page: `calendar.html`
 - Menu list page: `menu/index.html`
+- PWA assets: `manifest.webmanifest`, `sw.js`, `offline.html`, and `icons/`
 - The pages are static and GitHub Pages compatible.
 - The menu list page shows current/future entries.
 - The calendar page shows the full history and lets you pick a date to inspect.
 - Nutrition panels are hidden by default and appear as a `栄養を見る` control only when an entry has `nutrition`.
 - The pages are regenerated automatically whenever `data/menu.json` is saved.
+- The service worker cache is versioned from the saved menu data, so a new menu save pushes a fresh cache and updates the app shell on the next online load.
 - The generated website uses the browser's current JST date for "today"; do not add a manual base-date selector unless the user explicitly asks for one.
 
 ## Notification Behavior

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Dormitory Menu">
+  <defs>
+    <linearGradient id="bg" x1="96" y1="48" x2="416" y2="464" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f28c28"/>
+      <stop offset="1" stop-color="#e45f45"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect x="110" y="118" width="292" height="276" rx="42" fill="#ffffff"/>
+  <rect x="110" y="118" width="292" height="72" rx="42" fill="#4e79a7"/>
+  <rect x="154" y="86" width="34" height="64" rx="17" fill="#ffffff"/>
+  <rect x="324" y="86" width="34" height="64" rx="17" fill="#ffffff"/>
+  <rect x="150" y="214" width="212" height="22" rx="11" fill="#dbe6f3"/>
+  <rect x="150" y="258" width="168" height="22" rx="11" fill="#dbe6f3"/>
+  <rect x="150" y="302" width="186" height="22" rx="11" fill="#dbe6f3"/>
+  <circle cx="350" cy="332" r="24" fill="#f4c542"/>
+  <circle cx="350" cy="332" r="12" fill="#ffffff" opacity="0.85"/>
+</svg>
