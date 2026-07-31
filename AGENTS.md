@@ -66,7 +66,8 @@ If you are about to touch attachment ingestion or user registry updates, also re
 5. Edit the smallest set of files needed.
 6. Run syntax checks or dry-runs.
 7. Send a test notification to test users for menu-related changes.
-8. Summarize what changed and what was verified.
+8. For menu additions or attachment-driven menu imports, commit and push the related changes after validation and the test notification. Do not include unrelated worktree changes.
+9. Summarize what changed, what was verified, and the commit/push result.
 
 ## Menu Additions
 
@@ -77,6 +78,7 @@ When adding or correcting a menu entry:
 - Attachments are parsed directly in the workspace and written to `data/menu.json` as structured data.
 - Prefer structured `menu` data.
 - Let the tool compute `menu_summary` unless the user explicitly provides one.
+- Menu additions may be committed and pushed automatically after validation and a test notification; no separate push request is needed.
 
 ## Escalation
 

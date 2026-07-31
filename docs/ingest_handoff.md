@@ -20,6 +20,7 @@ When a chat includes a menu image or PDF and asks to "add it", the expected beha
 5. Do not create duplicate entries for the same `date` + `meal`; update the existing entry instead.
 6. Regenerate the static site (`index.html`, `calendar.html`, `menu/index.html`) after saving.
 7. If the source path is available locally, keep it in `image_path` for provenance.
+8. After validation and a test notification, commit and push the related menu and generated-site changes automatically. Leave unrelated working-tree changes out of the commit.
 
 This workflow is meant to be followed by Codex in future chats as well. The assistant should do the parsing and JSON update itself; the user should not need to run a separate ingest script.
 
@@ -55,6 +56,7 @@ In a fresh chat, if the user says "attach this PDF/image and add it", follow thi
 - upsert into `data/menu.json`
 - regenerate the site files
 - send a test notification to test users for menu changes
+- commit and push the related changes, excluding unrelated worktree changes
 
 ## Source of Truth
 

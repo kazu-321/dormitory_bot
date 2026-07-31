@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "overrides": [
+    {
+      "date": "2026-07-27",
+      "meal": "lunch",
+      "time": "12:30"
+    },
+    {
+      "date": "2026-07-28",
+      "meal": "lunch",
+      "time": "12:30"
+    },
+    {
+      "date": "2026-07-29",
+      "meal": "lunch",
+      "time": "12:30"
+    },
+    {
+      "date": "2026-07-30",
+      "meal": "lunch",
+      "time": "12:30"
+    },
+    {
+      "date": "2026-07-31",
+      "meal": "lunch",
+      "time": "12:30"
+    },
+    {
+      "date": "2026-08-03",
+      "meal": "lunch",
+      "time": "12:30"
+    }
+  ]
+}

@@ -133,6 +133,30 @@ If a future chat hands you an image or PDF and asks to add it, do the parsing an
 - Do not send to non-test users unless explicitly instructed.
 - Scheduled runs still notify all subscribed users.
 
+### Sharing menu changes
+
+- After adding or correcting menu data and completing validation plus a test notification, commit and push the related menu changes automatically.
+- Keep unrelated working-tree changes out of the commit and report the commit and push result.
+
+### Temporary notification times
+
+- Temporary date/meal times are stored in `data/notification_overrides.json`.
+- Each override has `date` (`YYYY-MM-DD`), `meal`, and `time` (`HH:MM`) in JST.
+- Normal menu cron jobs skip a date/meal that has an override.
+- A once-per-minute cron job sends an override when its date and time match.
+- Expired entries are ignored automatically; they do not need a date-specific crontab line.
+
+Example:
+
+```json
+{
+  "version": 1,
+  "overrides": [
+    {"date": "2026-07-27", "meal": "lunch", "time": "12:30"}
+  ]
+}
+```
+
 ## Development Policy
 
 ### General
