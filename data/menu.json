@@ -6156,6 +6156,93 @@
         "kind": "dinner"
       },
       "menu_summary": "とんかつ おろしぽん酢"
+    },
+    {
+      "date": "2026-08-10",
+      "extracted_at": "2026-08-07T12:05:48+09:00",
+      "image_path": "/home/kazu/ダウンロード/8.10週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "ウィンナー（２本）",
+          "ひじきと大豆の煮物",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "ウィンナー（２本）"
+    },
+    {
+      "date": "2026-08-10",
+      "extracted_at": "2026-08-07T12:05:48+09:00",
+      "image_path": "/home/kazu/ダウンロード/8.10週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "スパイシーポークジンジャー",
+          "ポテトの醤油バター風味",
+          "たいやき",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "スパイシーポークジンジャー"
+    },
+    {
+      "date": "2026-08-10",
+      "extracted_at": "2026-08-07T12:05:48+09:00",
+      "image_path": "/home/kazu/ダウンロード/8.10週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "夏祭りメニュー",
+        "b": "",
+        "common": [
+          "そばめし",
+          "フランクフルト",
+          "枝豆",
+          "フライドポテト",
+          "たこ焼き",
+          "アイスバイキング"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "夏祭りメニュー"
+    },
+    {
+      "date": "2026-08-11",
+      "extracted_at": "2026-08-07T12:05:48+09:00",
+      "image_path": "/home/kazu/ダウンロード/8.10週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "そぼろ肉じゃが",
+          "蒸し鶏と胡瓜の梅和え",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "そぼろ肉じゃが"
+    },
+    {
+      "date": "2026-08-11",
+      "extracted_at": "2026-08-07T12:05:48+09:00",
+      "image_path": "/home/kazu/ダウンロード/8.10週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "カレーライス（鶏）",
+          "キャベツのツナマヨサラダ",
+          "選べるデザートの日",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "カレーライス"
     }
   ],
   "version": 2
