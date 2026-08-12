@@ -157,6 +157,13 @@ Example:
 }
 ```
 
+### Notification pause
+
+- Temporary all-notification pauses are stored in `data/notification_pause.json`.
+- `paused_through` is inclusive and uses `YYYY-MM-DD` in JST.
+- While paused, menu, cleaning, and cleaning rotation senders exit successfully before sending Discord DMs.
+- Dry-runs still print normally for validation.
+
 ## Development Policy
 
 ### General

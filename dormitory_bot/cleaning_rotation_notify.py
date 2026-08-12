@@ -8,6 +8,7 @@ from typing import Any
 
 from .config import DATA_DIR
 from .discord_client import send_dm_message
+from .notification_pause import is_paused, pause_message
 from .user_data import DEFAULT_USER_DATA_PATH, filter_test_users, find_users_for_notification
 
 CLEANING_ROTATION_EMBED_COLOR = 0x4E79A7
@@ -132,6 +133,10 @@ def main() -> int:
 
     if args.dry_run:
         print(message)
+        return 0
+
+    if is_paused():
+        print(pause_message())
         return 0
 
     if not args.token:

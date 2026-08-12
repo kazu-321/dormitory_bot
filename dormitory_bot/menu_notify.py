@@ -8,6 +8,7 @@ from zoneinfo import ZoneInfo
 
 from .config import DEFAULT_STORE_PATH, JST, MEAL_COLORS, MEAL_LABELS_JA
 from .discord_client import send_dm_message
+from .notification_pause import is_paused, pause_message
 from .user_data import DEFAULT_USER_DATA_PATH, filter_test_users, find_users_for_notification
 from .store import find_entry, latest_entry_for_meal, menu_to_lines, parse_menu_from_text
 
@@ -169,6 +170,10 @@ def main() -> int:
     if args.dry_run:
         print("メニュー")
         print(body)
+        return 0
+
+    if is_paused():
+        print(pause_message())
         return 0
 
     if not args.token:
