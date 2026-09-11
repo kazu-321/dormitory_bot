@@ -6243,6 +6243,326 @@
         "kind": "list"
       },
       "menu_summary": "カレーライス"
+    },
+    {
+      "date": "2026-09-14",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "油淋鶏（鶏唐揚げ香味ソース）",
+        "b": "",
+        "common": [
+          "白菜とハムの炒め",
+          "ジョア",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "唐揚げ"
+    },
+    {
+      "date": "2026-09-15",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "メンチカツ",
+          "ひじきと枝豆の煮物",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "メンチカツ"
+    },
+    {
+      "date": "2026-09-15",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "豚丼",
+          "もやしときくらげの中華和え",
+          "プチシュー",
+          "ご汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "豚丼"
+    },
+    {
+      "date": "2026-09-15",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "ハンバーグ ジンジャーソース",
+        "b": "ゆで豚と竹輪天の南蛮だれ",
+        "common": [
+          "ブロッコリーとパプリカのナムル",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "ハンバーグ / 南蛮だれ"
+    },
+    {
+      "date": "2026-09-16",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "野菜たっぷり卵焼き",
+          "青梗菜とえのきのお浸し",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "野菜たっぷり卵焼き"
+    },
+    {
+      "date": "2026-09-16",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "レモンおろしだれの冷やし中華",
+          "肉団子の旨煮",
+          "フルーチェ ぶどう",
+          "ご飯",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "冷やし中華"
+    },
+    {
+      "date": "2026-09-16",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "【勝ち飯】豚ロース肉のカポナータソースセット",
+        "b": "",
+        "common": [
+          "ヤクルト"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "カポナータソースセット"
+    },
+    {
+      "date": "2026-09-17",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "そぼろ肉じゃが",
+          "青菜と白菜のぽん酢がけ",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "そぼろ肉じゃが"
+    },
+    {
+      "date": "2026-09-17",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "豚のケチャップ炒め",
+          "ソーセージとキャベツのフレンチサラダ",
+          "グレープフルーツゼリー",
+          "ご飯・汁物",
+          "コーヒー牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "ケチャップ炒め"
+    },
+    {
+      "date": "2026-09-17",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "味噌とんかつ",
+        "b": "麻婆春雨",
+        "common": [
+          "ブロッコリーのカレーマヨ和え",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "味噌とんかつ / 麻婆春雨"
+    },
+    {
+      "date": "2026-09-18",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "プレーンオムレツ",
+          "ツナとコーンのマカロニサラダ",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "オムレツ"
+    },
+    {
+      "date": "2026-09-18",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "カレーライス",
+          "カラフルサラダ",
+          "フルーツヨーグルト",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "カレーライス"
+    },
+    {
+      "date": "2026-09-18",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "グリルチキン ベーコンオニオンソース",
+        "b": "アジフライ",
+        "common": [
+          "揚げ茄子のオリーブ和え",
+          "ジュース",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "ベーコンオニオンソース / フライ"
+    },
+    {
+      "date": "2026-09-19",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "豚野菜炒め",
+          "春雨サラダ",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "豚野菜炒め"
+    },
+    {
+      "date": "2026-09-19",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "BBQチキン",
+          "ポテトの磯辺揚げ",
+          "フルーチェ イチゴ",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "BBQチキン"
+    },
+    {
+      "date": "2026-09-19",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "豚と根菜の甘辛きんぴら",
+        "b": "",
+        "common": [
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "甘辛きんぴら"
+    },
+    {
+      "date": "2026-09-20",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "breakfast",
+      "menu": {
+        "items": [
+          "ホウレン草のスクランブルエッグ",
+          "キャベツと筍の炒め煮",
+          "シリアル",
+          "漬物・海苔・納豆",
+          "汁物・牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "スクランブルエッグ"
+    },
+    {
+      "date": "2026-09-20",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "lunch",
+      "menu": {
+        "items": [
+          "豚焼肉ともやしの油淋ソース",
+          "餃子",
+          "黒糖ゼリー",
+          "ご飯・汁物",
+          "牛乳"
+        ],
+        "kind": "list"
+      },
+      "menu_summary": "焼肉"
+    },
+    {
+      "date": "2026-09-20",
+      "extracted_at": "2026-09-11T13:53:31+09:00",
+      "image_path": "/home/kazu/ダウンロード/9.14週.pdf",
+      "meal": "dinner",
+      "menu": {
+        "a": "ポテトコロッケ＆チキンカツ",
+        "b": "",
+        "common": [
+          "蒸し鶏と胡瓜の中華和え",
+          "ご飯",
+          "汁物"
+        ],
+        "kind": "dinner"
+      },
+      "menu_summary": "チキンカツ"
     }
   ],
   "version": 2
