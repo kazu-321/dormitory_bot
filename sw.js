@@ -1,4 +1,4 @@
-const CACHE_NAME = "dormitory-menu-6a9c3955d549";
+const CACHE_NAME = "dormitory-menu-a1e998e333aa";
 const APP_SHELL = ["./", "./index.html", "./menu/", "./menu/index.html", "./calendar.html", "./offline.html", "./manifest.webmanifest", "./icons/icon.svg", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {
